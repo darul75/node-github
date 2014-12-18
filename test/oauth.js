@@ -28,7 +28,10 @@ http.createServer(function(req, res) {
             res.writeHead(303, {
                 Location: oauth.getAuthorizeUrl({ 
                     redirect_uri: 'http://localhost:3000/linked-callback',
-                    scope: "user,repo,gist"
+                    client_id:clientId,
+                    scope:'r_fullprofile',
+                    response_type:'code',
+                    state:'DCEEFWF45453sdffef424'
                 })
             });
             res.end();
@@ -49,8 +52,15 @@ http.createServer(function(req, res) {
     } 
     // URL called by github after authenticating
     else if (path.match(/^\/linked-callback\/?$/)) {
+        console.log();
         // upgrade the code to an access token
-        oauth.getOAuthAccessToken(query.code, {}, function (err, access_token, refresh_token) {
+        oauth.getOAuthAccessToken(query.code, {            
+            grant_type:'authorization_code',
+            code:query.code,
+            redirect_uri: 'http://localhost:3000/linked-callback',
+            client_id:clientId,                                           
+            client_secret:secret
+        }, function (err, access_token, refresh_token) {
             if (err) {
                 console.log(err);
                 res.writeHead(500);
@@ -60,7 +70,7 @@ http.createServer(function(req, res) {
             
             accessToken = access_token;
             
-            console.log("access_token");
+            console.log(accessToken);
             // authenticate github API
             // github.authenticate({
             //     type: "oauth",
@@ -69,7 +79,7 @@ http.createServer(function(req, res) {
               
             //redirect back
             res.writeHead(303, {
-                Location: "/"
+                Location: "/toto"
             });
             res.end();
         });
