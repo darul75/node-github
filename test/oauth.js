@@ -2,12 +2,12 @@ var http = require("http");
 var Url = require("url");
 var querystring = require("querystring");
 
-//var Client = require("../index");
+var Client = require("../index");
 var OAuth2 = require("oauth").OAuth2;
 
-// var github = new Client({
-//     version: "3.0.0"
-// });
+var github = new Client({
+    version: "3.0.0"
+});
 
 var clientId = "77ysw2wf6f1s03";
 var secret = "hCA1DTmeCy1Y2UIB";
@@ -72,10 +72,21 @@ http.createServer(function(req, res) {
             
             console.log(accessToken);
             // authenticate github API
-            // github.authenticate({
-            //     type: "oauth",
-            //     token: accessToken
-            // });
+            github.authenticate({
+                type: "oauth",
+                token: accessToken
+            });
+
+            // use github API            
+            github.people.getPeople({}, function(err, user) {
+                if (err) {
+                    res.writeHead(err.code);
+                    res.end(err + "");
+                    return;
+                }
+                res.writeHead(200);
+                res.end(JSON.stringify(user));
+            });
               
             //redirect back
             res.writeHead(303, {
