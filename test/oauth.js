@@ -1,30 +1,17 @@
-/** section: github, internal
- *  OAuth
- * 
- *  OAuth usage example.
- * 
- *  Copyright 2012 Cloud9 IDE, Inc.
- *
- *  This product includes software developed by
- *  Cloud9 IDE, Inc (http://c9.io).
- *
- *  Author: Mike de Boer <mike@c9.io>
- **/
-
 var http = require("http");
 var Url = require("url");
 var querystring = require("querystring");
 
-var Client = require("../index");
+//var Client = require("../index");
 var OAuth2 = require("oauth").OAuth2;
 
-var github = new Client({
-    version: "3.0.0"
-});
+// var github = new Client({
+//     version: "3.0.0"
+// });
 
-var clientId = "e8c434a1c92e9de7ff8d";
-var secret = "1d0fcbb060e1dd86a0aa3d12265419c9bb19a333";
-var oauth = new OAuth2(clientId, secret, "https://github.com/", "login/oauth/authorize", "login/oauth/access_token");
+var clientId = "77ysw2wf6f1s03";
+var secret = "hCA1DTmeCy1Y2UIB";
+var oauth = new OAuth2(clientId, secret, "https://www.linkedin.com/", "uas/oauth2/authorization", "uas/oauth2/accessToken");
 
 // for demo purposes use one global access token
 // in production this has to be stored in a user session
@@ -40,7 +27,7 @@ http.createServer(function(req, res) {
         if (!accessToken) {
             res.writeHead(303, {
                 Location: oauth.getAuthorizeUrl({ 
-                    redirect_uri: 'http://localhost:7878/github-callback',
+                    redirect_uri: 'http://localhost:3000/linked-callback',
                     scope: "user,repo,gist"
                 })
             });
@@ -48,20 +35,20 @@ http.createServer(function(req, res) {
             return;
         }
                 
-        // use github API            
-        github.user.get({}, function(err, user) {
-            if (err) {
-                res.writeHead(err.code);
-                res.end(err + "");
-                return;
-            }
-            res.writeHead(200);
-            res.end(JSON.stringify(user));
-        });
+        // // use github API            
+        // github.user.get({}, function(err, user) {
+        //     if (err) {
+        //         res.writeHead(err.code);
+        //         res.end(err + "");
+        //         return;
+        //     }
+        //     res.writeHead(200);
+        //     res.end(JSON.stringify(user));
+        // });
         return;
     } 
     // URL called by github after authenticating
-    else if (path.match(/^\/github-callback\/?$/)) {
+    else if (path.match(/^\/linked-callback\/?$/)) {
         // upgrade the code to an access token
         oauth.getOAuthAccessToken(query.code, {}, function (err, access_token, refresh_token) {
             if (err) {
@@ -73,11 +60,12 @@ http.createServer(function(req, res) {
             
             accessToken = access_token;
             
+            console.log("access_token");
             // authenticate github API
-            github.authenticate({
-                type: "oauth",
-                token: accessToken
-            });
+            // github.authenticate({
+            //     type: "oauth",
+            //     token: accessToken
+            // });
               
             //redirect back
             res.writeHead(303, {
@@ -90,6 +78,6 @@ http.createServer(function(req, res) {
 
     res.writeHead(404);
     res.end("404 - Not found");
-}).listen(7878);
+}).listen(3000);
 
-console.log("listening at http://localhost:7878");
+console.log("listening at http://localhost:3000");

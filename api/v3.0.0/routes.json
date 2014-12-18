@@ -2,9 +2,9 @@
     "defines": {
         "constants": {
             "name": "Github",
-            "description": "A Node.JS module, which provides an object oriented wrapper for the GitHub v3 API.",
+            "description": "A Node.JS module, which provides an object oriented wrapper for the Linked API.",
             "protocol": "https",
-            "host": "api.github.com",
+            "host": "linkedin.com",
             "port": 443,
             "dateFormat": "YYYY-MM-DDTHH:MM:SSZ",
             "requestFormat": "json",
@@ -1229,11 +1229,13 @@
 
     "authorization": {
         "get-all": {
-            "url": "/authorizations",
+            "url": "/uas/oauth2/authorization",
             "method": "GET",
             "params": {
-                "$page": null,
-                "$per_page": null
+                "$client_id": null,
+                "$scope": null,
+                "$state": null,
+                "$redirect_uri":null
             }
         },
         "get": {

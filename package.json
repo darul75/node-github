@@ -18,7 +18,7 @@
     "devDependencies": {
         "oauth": "~0.9.7",
         "optimist": "~0.6.0",
-        "mocha": "~1.13.0"
+        "mocha": "2.0.1"
     },
     "main" : ".",
     "scripts": {
