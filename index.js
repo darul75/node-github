@@ -1,185 +1,16 @@
 "use strict";
 
+var Fs = require("fs");
 var error = require("./error");
 var Util = require("./util");
 var Url = require("url");
 
-/** section: github
- * class Client
- *
- *  Copyright 2012 Cloud9 IDE, Inc.
- *
- *  This product includes software developed by
- *  Cloud9 IDE, Inc (http://c9.io).
- *
- *  Author: Mike de Boer <mike@c9.io>
- *
- *  [[Client]] can load any version of the [[github]] client API, with the
- *  requirement that a valid routes.json definition file is present in the
- *  `api/[VERSION]` directory and that the routes found in this file are
- *  implemented as well.
- *
- *  Upon instantiation of the [[Client]] class, the routes.json file is loaded
- *  from the API version specified in the configuration and, parsed and from it
- *  the routes for HTTP requests are extracted. For each HTTP endpoint to the
- *  HTTP server, a method is generated which accepts a Javascript Object
- *  with parameters and an optional callback to be invoked when the API request
- *  returns from the server or when the parameters could not be validated.
- *
- *  When an HTTP endpoint is processed and a method is generated as described
- *  above, [[Client]] also sets up parameter validation with the rules as
- *  defined in the routes.json. A full example that illustrates how this works
- *  is shown below:
- *
- *  ##### Example
- *
- *  First, we look at a listing of a sample routes.json routes definition file:
- *
- *      {
- *          "defines": {
- *              "constants": {
- *                  "name": "Github",
- *                  "description": "A Node.JS module, which provides an object oriented wrapper for the GitHub v3 API.",
- *                  "protocol": "https",
- *                  "host": "api.github.com",
- *                  "port": 443,
- *                  "dateFormat": "YYYY-MM-DDTHH:MM:SSZ",
- *                  "requestFormat": "json"
- *              },
- *              "response-headers": [
- *                  "X-RateLimit-Limit",
- *                  "X-RateLimit-Remaining",
- *                  "Link"
- *              ],
- *              "params": {
- *                  "files": {
- *                      "type": "Json",
- *                      "required": true,
- *                      "validation": "",
- *                      "invalidmsg": "",
- *                      "description": "Files that make up this gist. The key of which should be a required string filename and the value another required hash with parameters: 'content'"
- *                  },
- *                  "user": {
- *                      "type": "String",
- *                      "required": true,
- *                      "validation": "",
- *                      "invalidmsg": "",
- *                      "description": ""
- *                  },
- *                  "description": {
- *                      "type": "String",
- *                      "required": false,
- *                      "validation": "",
- *                      "invalidmsg": "",
- *                      "description": ""
- *                  },
- *                  "page": {
- *                      "type": "Number",
- *                      "required": false,
- *                      "validation": "^[0-9]+$",
- *                      "invalidmsg": "",
- *                      "description": "Page number of the results to fetch."
- *                  },
- *                  "per_page": {
- *                      "type": "Number",
- *                      "required": false,
- *                      "validation": "^[0-9]+$",
- *                      "invalidmsg": "",
- *                      "description": "A custom page size up to 100. Default is 30."
- *                  }
- *              }
- *          },
- *
- *          "gists": {
- *              "get-from-user": {
- *                  "url": ":user/gists",
- *                  "method": "GET",
- *                  "params": {
- *                      "$user": null,
- *                      "$page": null,
- *                      "$per_page": null
- *                  }
- *              },
- *
- *              "create": {
- *                  "url": "/gists",
- *                  "method": "POST",
- *                  "params": {
- *                      "$description": null,
- *                      "public": {
- *                          "type": "Boolean",
- *                          "required": true,
- *                          "validation": "",
- *                          "invalidmsg": "",
- *                          "description": ""
- *                      },
- *                      "$files": null
- *                  }
- *              }
- *          }
- *       }
- *
- *  You probably noticed that the definition is quite verbose and the decision
- *  for its design was made to be verbose whilst still allowing for basic variable
- *  definitions and substitions for request parameters.
- *
- *  There are two sections; 'defines' and 'gists' in this example.
- *
- *  The `defines` section contains a list of `constants` that will be used by the
- *  [[Client]] to make requests to the right URL that hosts the API.
- *  The `gists` section defines the endpoints for calls to the API server, for
- *  gists specifically in this example, but the other API sections are defined in
- *  the exact same way.
- *  These definitions are parsed and methods are created that the client can call
- *  to make an HTTP request to the server.
- *  there is one endpoint defined: .
- *  In this example, the endpoint `gists/get-from-user` will be exposed as a member
- *  on the [[Client]] object and may be invoked with
- *
- *      client.getFromUser({
- *          "user": "bob"
- *      }, function(err, ret) {
- *          // do something with the result here.
- *      });
- *
- *      // or to fetch a specfic page:
- *      client.getFromUser({
- *          "user": "bob",
- *          "page": 2,
- *          "per_page": 100
- *      }, function(err, ret) {
- *          // do something with the result here.
- *      });
- *
- *  All the parameters as specified in the Object that is passed to the function
- *  as first argument, will be validated according to the rules in the `params`
- *  block of the route definition.
- *  Thus, in the case of the `user` parameter, according to the definition in
- *  the `params` block, it's a variable that first needs to be looked up in the
- *  `params` block of the `defines` section (at the top of the JSON file). Params
- *  that start with a `$` sign will be substituted with the param with the same
- *  name from the `defines/params` section.
- *  There we see that it is a required parameter (needs to hold a value). In other
- *  words, if the validation requirements are not met, an HTTP error is passed as
- *  first argument of the callback.
- *
- *  Implementation Notes: the `method` is NOT case sensitive, whereas `url` is.
- *  The `url` parameter also supports denoting parameters inside it as follows:
- *
- *      "get-from-user": {
- *          "url": ":user/gists",
- *          "method": "GET"
- *          ...
- *      }
- **/
 var Client = module.exports = function(config) {
-    config.headers = config.headers || {};
     this.config = config;
     this.debug = Util.isTrue(config.debug);
 
     this.version = config.version;
-    var cls = require("./api/v" + this.version);
-    this[this.version] = new cls(this);
+    this[this.version] = JSON.parse(Fs.readFileSync(__dirname + "/api/v" + this.version + "/routes.json", "utf8"));
 
     var pathPrefix = "";
     // Check if a prefix is passed in the config and strip any leading or trailing slashes from it.
@@ -221,11 +52,13 @@ var Client = module.exports = function(config) {
      **/
     this.setupRoutes = function() {
         var self = this;
-        var api = this[this.version];
-        var routes = api.routes;
+        var routes = this[this.version];
         var defines = routes.defines;
         this.constants = defines.constants;
         this.requestHeaders = defines["request-headers"].map(function(header) {
+            return header.toLowerCase();
+        });
+        this.responseHeaders = defines["response-headers"].map(function(header) {
             return header.toLowerCase();
         });
         delete routes.defines;
@@ -247,10 +80,8 @@ var Client = module.exports = function(config) {
                         throw new error.BadRequest("Invalid variable parameter name substitution; param '" +
                             paramName + "' not found in defines block", "fatal");
                     }
-                    else {
-                        def = paramsStruct[paramName] = defines.params[paramName];
-                        delete paramsStruct["$" + paramName];
-                    }
+                    else
+                        def = defines.params[paramName];
                 }
                 else
                     def = paramsStruct[paramName];
@@ -259,7 +90,7 @@ var Client = module.exports = function(config) {
                 if (typeof value != "boolean" && !value) {
                     // we don't need to validation for undefined parameter values
                     // that are not required.
-                    if (!def.required || (def["allow-empty"] && value === ""))
+                    if (!def.required)
                         continue;
                     throw new error.BadRequest("Empty value for parameter '" +
                         paramName + "': " + value);
@@ -324,20 +155,6 @@ var Client = module.exports = function(config) {
                     parts.splice(0, 2);
                     var funcName = Util.toCamelCase(parts.join("-"));
 
-                    if (!api[section]) {
-                        throw new Error("Unsupported route section, not implemented in version " +
-                            self.version + " for route '" + endPoint + "' and block: " +
-                            JSON.stringify(block));
-                    }
-
-                    if (!api[section][funcName]) {
-                        if (self.debug)
-                            Util.log("Tried to call " + funcName);
-                        throw new Error("Unsupported route, not implemented in version " +
-                            self.version + " for route '" + endPoint + "' and block: " +
-                            JSON.stringify(block));
-                    }
-
                     if (!self[section]) {
                         self[section] = {};
                         // add a utility function 'getFooApi()', which returns the
@@ -354,14 +171,13 @@ var Client = module.exports = function(config) {
                         catch (ex) {
                             // when the message was sent to the client, we can
                             // reply with the error directly.
-                            api.sendError(ex, block, msg, callback);
+                            self.sendError(ex, block, msg, callback);
                             if (self.debug)
                                 Util.log(ex.message, "fatal");
                             // on error, there's no need to continue.
                             return;
                         }
-
-                        api[section][funcName].call(api, msg, block, callback);
+                        self.handler(msg, block, callback);
                     };
                 }
                 else {
@@ -405,19 +221,13 @@ var Client = module.exports = function(config) {
      *          key: "clientID",
      *          secret: "clientSecret"
      *      });
-     *
-     *      // or token
-     *      github.authenticate({
-     *          type: "token",
-     *          token: "userToken",
-     *      });
      **/
     this.authenticate = function(options) {
         if (!options) {
             this.auth = false;
             return;
         }
-        if (!options.type || "basic|oauth|client|token".indexOf(options.type) === -1)
+        if (!options.type || "basic|oauth|client".indexOf(options.type) === -1)
             throw new Error("Invalid authentication type, must be 'basic', 'oauth' or 'client'");
         if (options.type == "basic" && (!options.username || !options.password))
             throw new Error("Basic authentication requires both a username and password to be set");
@@ -425,8 +235,6 @@ var Client = module.exports = function(config) {
             if (!options.token && !(options.key && options.secret))
                 throw new Error("OAuth2 authentication requires a token or key & secret to be set");
         }
-        if (options.type == "token" && !options.token)
-            throw new Error("Token authentication requires a token to be set");
 
         this.auth = options;
     };
@@ -492,16 +300,16 @@ var Client = module.exports = function(config) {
         if (!url)
             return callback(new error.NotFound("No " + which + " page found"));
 
-        var api = this[this.version];
         var parsedUrl = Url.parse(url, true);
         var block = {
             url: parsedUrl.pathname,
             method: "GET",
             params: parsedUrl.query
         };
+        var self = this;
         this.httpSend(parsedUrl.query, block, function(err, res) {
             if (err)
-                return api.sendError(err, null, parsedUrl.query, callback);
+                return self.sendError(err, null, parsedUrl.query, callback);
 
             var ret;
             try {
@@ -517,7 +325,7 @@ var Client = module.exports = function(config) {
                 ret = {};
             if (!ret.meta)
                 ret.meta = {};
-            ["x-ratelimit-limit", "x-ratelimit-remaining", "link"].forEach(function(header) {
+            self.responseHeaders.forEach(function(header) {
                 if (res.headers[header])
                     ret.meta[header] = res.headers[header];
             });
@@ -592,30 +400,18 @@ var Client = module.exports = function(config) {
             var isUrlParam = url.indexOf(":" + paramName) !== -1;
             var valFormat = isUrlParam || format != "json" ? "query" : format;
             var val;
-            if (valFormat != "json") {
-                if (typeof msg[paramName] == "object") {
-                    try {
-                        msg[paramName] = JSON.stringify(msg[paramName]);
-                        val = encodeURIComponent(msg[paramName]);
-                    }
-                    catch (ex) {
-                        return Util.log("httpSend: Error while converting object to JSON: "
-                            + (ex.message || ex), "error");
-                    }
-                }
-                else if (def.params[paramName] && def.params[paramName].combined) {
-                    // Check if this is a combined (search) string.
-                    val = msg[paramName].split(/[\s\t\r\n]*\+[\s\t\r\n]*/)
-                                        .map(function(part) {
-                                            return encodeURIComponent(part);
-                                        })
-                                        .join("+");
-                }
-                else
+            if (valFormat != "json" && typeof msg[paramName] == "object") {
+                try {
+                    msg[paramName] = JSON.stringify(msg[paramName]);
                     val = encodeURIComponent(msg[paramName]);
+                }
+                catch (ex) {
+                    return Util.log("httpSend: Error while converting object to JSON: "
+                        + (ex.message || ex), "error");
+                }
             }
             else
-                val = msg[paramName];
+                val = valFormat == "json" ? msg[paramName] : encodeURIComponent(msg[paramName]);
 
             if (isUrlParam) {
                 url = url.replace(":" + paramName, val);
@@ -657,7 +453,7 @@ var Client = module.exports = function(config) {
         var protocol = this.config.protocol || this.constants.protocol || "http";
         var host = this.config.host || this.constants.host;
         var port = this.config.port || this.constants.port || (protocol == "https" ? 443 : 80);
-
+        
         var proxyUrl;
         if (this.config.proxy !== undefined) {
             proxyUrl = this.config.proxy;
@@ -711,7 +507,8 @@ var Client = module.exports = function(config) {
                     }
                     break;
                 case "token":
-                    headers.authorization = "token " + this.auth.token;
+                    basic = new Buffer(this.auth.username + "/token:" + this.auth.token, "ascii").toString("base64");
+                    headers.authorization = "Basic " + basic;
                     break;
                 case "basic":
                     basic = new Buffer(this.auth.username + ":" + this.auth.password, "ascii").toString("base64");
@@ -722,21 +519,16 @@ var Client = module.exports = function(config) {
             }
         }
 
-        function addCustomHeaders(customHeaders) {
-            Object.keys(customHeaders).forEach(function(header) {
-                var headerLC = header.toLowerCase();
-                if (self.requestHeaders.indexOf(headerLC) == -1)
-                    return;
-                headers[headerLC] = customHeaders[header];
-            });
-        }
-        addCustomHeaders(Util.extend(msg.headers || {}, this.config.headers));
-
+        if (!msg.headers)
+            msg.headers = {};
+        Object.keys(msg.headers).forEach(function(header) {
+            var headerLC = header.toLowerCase();
+            if (self.requestHeaders.indexOf(headerLC) == -1)
+                return;
+            headers[headerLC] = msg.headers[header];
+        });
         if (!headers["user-agent"])
             headers["user-agent"] = "NodeJS HTTP Client";
-
-        if (!("accept" in headers))
-            headers.accept = this.config.requestMedia || this.constants.requestMedia;
 
         var options = {
             host: host,
@@ -745,9 +537,6 @@ var Client = module.exports = function(config) {
             method: method,
             headers: headers
         };
-
-        if (this.config.rejectUnauthorized !== undefined)
-            options.rejectUnauthorized = this.config.rejectUnauthorized;
 
         if (this.debug)
             console.log("REQUEST: ", options);
@@ -766,8 +555,8 @@ var Client = module.exports = function(config) {
             });
             res.on("error", function(err) {
                 if (!callbackCalled) {
-                   callbackCalled = true;
-                   callback(err);
+                   callbackCalled = true;   
+                   callback(err); 
                 }
             });
             res.on("end", function() {
@@ -814,4 +603,44 @@ var Client = module.exports = function(config) {
         }
         req.end();
     };
+
+    this.sendError = function(err, block, msg, callback) {
+        if (this.debug)
+            Util.log(err, block, msg.user, "error");
+        if (typeof err == "string")
+            err = new error.InternalServerError(err);
+        if (callback)
+            callback(err);
+    };
+
+    this.handler = function(msg, block, callback) {
+        var self = this;
+        this.httpSend(msg, block, function(err, res) {
+            if (err)
+                return self.sendError(err, msg, null, callback);
+
+            var ret;
+            try {
+                ret = res.data && JSON.parse(res.data);
+            }
+            catch (ex) {
+                if (callback)
+                    callback(new error.InternalServerError(ex.message), res);
+                return;
+            }
+
+            if (!ret) {
+                ret = {};
+            }
+            ret.meta = {};
+            self.responseHeaders.forEach(function(header) {
+                if (res.headers[header]) {
+                    ret.meta[header] = res.headers[header];
+                }
+            });
+
+            if (callback)
+                callback(null, ret);
+        });
+    }
 }).call(Client.prototype);

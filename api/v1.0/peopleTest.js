@@ -12,28 +12,23 @@
 var Assert = require("assert");
 var Client = require("./../../index");
 
-var clientId = "77ysw2wf6f1s03";
-var secret = "hCA1DTmeCy1Y2UIB";
-
 describe("[people]", function() {
     var client;
     var token = "c286e38330e15246a640c2cf32a45ea45d93b2ba";
 
     beforeEach(function() {
         client = new Client({
-            version: "3.0.0"
+            version: "1.0"
         });
         client.authenticate({
             type: "oauth",
-            key: clientId,
-            secret: secret
+            token: token
         });
     });
 
-    it("should successfully execute GET /user/repos (getAll)",  function(next) {
+    it("should successfully execute GET people/~ (getPeople)",  function(next) {
         client.people.getPeople(
-            {                
-            },
+            {},
             function(err, res) {
                 Assert.equal(err, null);
                 // other assertions go here
@@ -41,6 +36,4 @@ describe("[people]", function() {
             }
         );
     });
-
-   
 });

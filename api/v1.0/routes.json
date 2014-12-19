@@ -1,0 +1,311 @@
+  {
+  "defines": {
+    "constants": {
+      "name": "Linked",
+      "description": "A Node.JS module, which provides an object oriented wrapper for the Linked API.",
+      "protocol": "https",
+      "host": "api.linkedin.com",
+      "port": 443,
+      "dateFormat": "YYYY-MM-DDTHH:MM:SSZ",
+      "requestFormat": "json",
+      "requestMedia": "application/vnd.github.v3+json"
+    },
+    "response-headers": [
+      "X-RateLimit-Limit",
+      "X-RateLimit-Remaining",
+      "X-RateLimit-Reset",
+      "X-Oauth-Scopes",
+      "Link",
+      "Location",
+      "Last-Modified",
+      "Etag",
+      "Status"
+    ],
+    "request-headers": [
+      "If-Modified-Since",
+      "If-None-Match",
+      "Cookie",
+      "User-Agent",
+      "Accept",
+      "X-Linked-OTP"
+    ],
+    "params": {
+      "files": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": "Files that make up this gist. The key of which should be a required string filename and the value another required hash with parameters: 'content'"
+      },
+      "id": {
+          "type": "String",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "group-id": {
+          "type": "String",
+          "required": false,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "person-id": {
+          "type": "String",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "company-id": {
+          "type": "String",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "universal-name": {
+          "type": "String",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "email-domain": {
+          "type": "String",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "url": {
+          "type": "String",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "secure-urls": {
+          "type": "Boolean",
+          "required": false,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "start": {
+          "type": "Number",
+          "required": false,
+          "validation": "^[0-9]+$",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "count": {
+          "type": "Number",
+          "required": false,
+          "validation": "^[0-9]+$",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "modified": {
+          "type": "Boolean",
+          "required": false,
+          "validation": "",
+          "invalidmsg": "",
+          "description": "Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+      },
+      "modified-since": {
+          "type": "Date",
+          "required": false,
+          "validation": "",
+          "invalidmsg": "",
+          "description": "Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+      },
+      "membership-state": {
+          "type": "Array",
+          "required": false,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "order": {
+          "type": "Array",
+          "required": false,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "role": {
+          "type": "Array",
+          "required": false,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "category": {
+          "type": "Array",
+          "required": false,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+      }
+    }
+  },
+
+  "people": {
+      "get-current": {
+          "url": "/people/~",
+          "method": "GET",
+          "params": {                
+          }
+      },
+      "get-member": {
+          "url": "/people/",
+          "method": "GET",
+          "params": {
+            "$id": null,
+          }
+      },
+      "get-member-public": {
+          "url": "/people/",
+          "method": "GET",
+          "params": {
+            "$url": null,
+          }
+      },
+      "get-current-connections": {
+          "url": "/people/~/connections",
+          "method": "GET",
+          "params": {
+            $start: null,
+            $count: null,
+            $modified: null,
+            $modified-since:null
+          }
+      },
+      "get-member-connections": {
+          "url": "/people/:id/connections",
+          "method": "GET",
+          "params": {
+            "$id": null,
+            $start: null,
+            $count: null,
+            $modified: null,
+            $modified-since:null
+          }
+      },
+      "get-member-public-connections": {
+          "url": "/people/",
+          "method": "GET",
+          "params": {
+            "$url": null,
+            $start: null,
+            $count: null,
+            $modified: null,
+            $modified-since:null
+          }
+      }
+  },
+  "groups": {
+    "one": {
+      "url": "/groups/:id",
+      "method": "GET",
+      "params": {
+        "$url": null,
+        $start: null,
+        $count: null,
+        $modified: null,
+        $modified-since:null
+      }
+    },
+    "get-memberships": {
+      "url": "/people/~/group-memberships",
+      "method": "GET",
+      "params": {
+        "$membership-state": null,
+        $start: null,
+        $count: null,
+        
+      }
+    },
+    "get-settings": {
+      "url": "/people/~/group-memberships/:group-id",
+      "method": "GET",
+      "params": {
+        "$membership-state": null,
+        $group-id: null,
+        $start: null,
+        $count: null,
+        
+      }
+    },
+    "settings": {
+      "url": "/people/~/group-memberships/:group-id",
+      "method": "PUT",
+      "params": {        
+        $group-id: null
+      }
+    },
+    "add-group": {
+      "url": "/people/~/group-memberships",
+      "method": "POST",
+      "params": {}
+    },
+    "remove-group": {
+      "url": "/people/~/group-memberships",
+      "method": "DELETE",
+      "params": {
+        $group-id: null
+      }
+    },
+    "get-posts": {
+      "url": "/groups/{group-id}/posts",
+      "method": "GET",
+      "params": {
+        $group-id: null,
+        $start: null,
+        $count: null,
+        $role: null,
+        $category: null,
+      }
+    },
+    "get-memberships-posts": {
+      "url": "/people/~/group-memberships/{group-id}/posts",
+      "method": "GET",
+      "params": {
+        $group-id: null
+      }
+    },
+    "get-suggestions-posts": {
+      "url": "/people/~/group-memberships/{group-id}/posts",
+      "method": "GET",
+      "params": {
+        $group-id: null
+      }
+    }
+  },
+  "company": {
+      "one": {
+          "url": "/companies/:company-id",
+          "method": "GET",
+          "params": {
+            "$company-id": null,
+          }
+      },
+      "one-by-universal-name": {
+          "url": "/companies/:universal-name",
+          "method": "GET",
+          "params": {
+            "$universal-name": null,
+          }
+      },
+      "one-by-email-domain": {
+          "url": "/companies",
+          "method": "GET",
+          "params": {
+            "$email-domain": null,
+          }
+      }
+  },
+
+}
