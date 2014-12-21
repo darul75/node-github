@@ -69,7 +69,7 @@ http.createServer(function(req, res) {
       });
 
       // use github API            
-      github.people.getCurrent({"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth)'}, function(err, user) {
+      github.people.getCurrent({"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions)'}, function(err, user) {
         if (err) {
           res.writeHead(err.code);
           res.end(err + "");
