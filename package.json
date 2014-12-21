@@ -3,9 +3,7 @@
     "version" : "0.2.3",
     "description" : "NodeJS wrapper for the GitHub API",
     "author": "Mike de Boer <info@mikedeboer.nl>",
-    "contributors": [
-        { "name": "Mike de Boer", "email": "info@mikedeboer.nl" },
-        { "name": "Fabian Jakobs", "email": "fabian@c9.io" }
+    "contributors": [        
     ],
     "homepage": "http://github.com/mikedeboer/node-github",
     "repository" : {
@@ -18,7 +16,13 @@
     "devDependencies": {
         "oauth": "~0.9.7",
         "optimist": "~0.6.0",
-        "mocha": "2.0.1"
+        "mocha": "2.0.1",
+        "expect.js": "0.2.0",
+        "express": "3.4.0",
+        "supertest": "0.8.1",
+        "grunt": "latest",
+        "grunt-contrib-jshint": "latest",
+        "grunt-contrib-uglify": "latest"
     },
     "main" : ".",
     "scripts": {
