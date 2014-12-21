@@ -37,12 +37,19 @@
           "invalidmsg": "",
           "description": "Files that make up this gist. The key of which should be a required string filename and the value another required hash with parameters: 'content'"
       },
+      "url-field-selector": {
+        "type": "String",
+        "required": true,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
+      },
       "id": {
-          "type": "String",
-          "required": true,
-          "validation": "",
-          "invalidmsg": "",
-          "description": ""
+        "type": "String",
+        "required": true,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
       },
       "group-id": {
           "type": "String",
@@ -153,58 +160,59 @@
   },
 
   "people": {
-      "get-current": {
-          "url": "/people/~",
-          "method": "GET",
-          "params": {                
-          }
-      },
-      "get-member": {
-          "url": "/people/",
-          "method": "GET",
-          "params": {
-            "$id": null,
-          }
-      },
-      "get-member-public": {
-          "url": "/people/",
-          "method": "GET",
-          "params": {
-            "$url": null,
-          }
-      },
-      "get-current-connections": {
-          "url": "/people/~/connections",
-          "method": "GET",
-          "params": {
-            $start: null,
-            $count: null,
-            $modified: null,
-            $modified-since:null
-          }
-      },
-      "get-member-connections": {
-          "url": "/people/:id/connections",
-          "method": "GET",
-          "params": {
-            "$id": null,
-            $start: null,
-            $count: null,
-            $modified: null,
-            $modified-since:null
-          }
-      },
-      "get-member-public-connections": {
-          "url": "/people/",
-          "method": "GET",
-          "params": {
-            "$url": null,
-            $start: null,
-            $count: null,
-            $modified: null,
-            $modified-since:null
-          }
-      }
+    "get-current": {
+        "url": "/people/~",          
+        "method": "GET",
+        "params": {
+          "$url-field-selector": null
+        }
+    },
+    "get-member": {
+        "url": "/people/",
+        "method": "GET",
+        "params": {
+          "$id": null
+        }
+    },
+    "get-member-public": {
+        "url": "/people/",
+        "method": "GET",
+        "params": {
+          "$url": null
+        }
+    },
+    "get-current-connections": {
+        "url": "/people/~/connections",
+        "method": "GET",
+        "params": {
+          "$start": null,
+          "$count": null,
+          "$modified": null,
+          "$modified-since":null
+        }
+    },
+    "get-member-connections": {
+        "url": "/people/:id/connections",
+        "method": "GET",
+        "params": {
+          "$id": null,
+          "$start": null,
+          "$count": null,
+          "$modified": null,
+          "$modified-since":null
+        }
+    },
+    "get-member-public-connections": {
+        "url": "/people/",
+        "method": "GET",
+        "params": {
+          "$url": null,
+          "$start": null,
+          "$count": null,
+          "$modified": null,
+          "$modified-since":null
+        }
+    }
   },
   "groups": {
     "one": {
@@ -212,10 +220,10 @@
       "method": "GET",
       "params": {
         "$url": null,
-        $start: null,
-        $count: null,
-        $modified: null,
-        $modified-since:null
+        "$start": null,
+        "$count": null,
+        "$modified": null,
+        "$modified-since":null
       }
     },
     "get-memberships": {
@@ -223,9 +231,8 @@
       "method": "GET",
       "params": {
         "$membership-state": null,
-        $start: null,
-        $count: null,
-        
+        "$start": null,
+        "$count": null
       }
     },
     "get-settings": {
@@ -233,17 +240,16 @@
       "method": "GET",
       "params": {
         "$membership-state": null,
-        $group-id: null,
-        $start: null,
-        $count: null,
-        
+        "$group-id": null,
+        "$start": null,
+        "$count": null
       }
     },
     "settings": {
       "url": "/people/~/group-memberships/:group-id",
       "method": "PUT",
       "params": {        
-        $group-id: null
+        "$group-id": null
       }
     },
     "add-group": {
@@ -255,32 +261,32 @@
       "url": "/people/~/group-memberships",
       "method": "DELETE",
       "params": {
-        $group-id: null
+        "$group-id": null
       }
     },
     "get-posts": {
       "url": "/groups/{group-id}/posts",
       "method": "GET",
       "params": {
-        $group-id: null,
-        $start: null,
-        $count: null,
-        $role: null,
-        $category: null,
+        "$group-id": null,
+        "$start": null,
+        "$count": null,
+        "$role": null,
+        "$category": null
       }
     },
     "get-memberships-posts": {
       "url": "/people/~/group-memberships/{group-id}/posts",
       "method": "GET",
       "params": {
-        $group-id: null
+        "$group-id": null
       }
     },
     "get-suggestions-posts": {
       "url": "/people/~/group-memberships/{group-id}/posts",
       "method": "GET",
       "params": {
-        $group-id: null
+        "$group-id": null
       }
     }
   },
@@ -289,23 +295,22 @@
           "url": "/companies/:company-id",
           "method": "GET",
           "params": {
-            "$company-id": null,
+            "$company-id": null
           }
       },
       "one-by-universal-name": {
           "url": "/companies/:universal-name",
           "method": "GET",
           "params": {
-            "$universal-name": null,
+            "$universal-name": null
           }
       },
       "one-by-email-domain": {
           "url": "/companies",
           "method": "GET",
           "params": {
-            "$email-domain": null,
+            "$email-domain": null
           }
       }
-  },
-
+  }
 }
