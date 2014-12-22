@@ -82,22 +82,9 @@ http.createServer(function(req, res) {
         res.end(user);
       });
 
-      // github.people.getCurrentConnections({}, function(err, user) {
-      //   if (err) {
-      //     res.writeHead(err.code);
-      //     res.end(err + "");
-      //     return;
-      //   }
-      //   console.log(user);
-      //   res.end(user);              
-      // });
-
-          //redirect back
-          // res.writeHead(303, {
-          //     Location: "/toto"
-          // });        
-      });
-      return;
+          
+    });
+    return;
   }
 
   res.writeHead(404);

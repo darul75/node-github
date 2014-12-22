@@ -129,32 +129,53 @@
           "description": "Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
       },
       "membership-state": {
-          "type": "Array",
-          "required": false,
-          "validation": "",
-          "invalidmsg": "",
-          "description": ""
+        "type": "Array",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
       },
       "order": {
-          "type": "Array",
-          "required": false,
-          "validation": "",
-          "invalidmsg": "",
-          "description": ""
+        "type": "Array",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
       },
       "role": {
-          "type": "Array",
-          "required": false,
-          "validation": "",
-          "invalidmsg": "",
-          "description": ""
+        "type": "Array",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
       },
       "category": {
-          "type": "Array",
-          "required": false,
-          "validation": "",
-          "invalidmsg": "",
-          "description": ""
+        "type": "Array",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
+      },
+      "is-company-admin": {
+        "type": "Boolean",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
+      },
+      "event-type": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
+      },
+      "company-update-key": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
       }
     }
   },
@@ -188,7 +209,8 @@
           "$start": null,
           "$count": null,
           "$modified": null,
-          "$modified-since":null
+          "$modified-since":null,
+          "$url-field-selector": null
         }
     },
     "get-member-connections": {
@@ -223,7 +245,8 @@
         "$start": null,
         "$count": null,
         "$modified": null,
-        "$modified-since":null
+        "$modified-since":null,
+        "$url-field-selector": null
       }
     },
     "get-memberships": {
@@ -232,7 +255,8 @@
       "params": {
         "$membership-state": null,
         "$start": null,
-        "$count": null
+        "$count": null,
+        "$url-field-selector": null
       }
     },
     "get-settings": {
@@ -272,7 +296,8 @@
         "$start": null,
         "$count": null,
         "$role": null,
-        "$category": null
+        "$category": null,
+        "$url-field-selector": null
       }
     },
     "get-memberships-posts": {
@@ -291,26 +316,74 @@
     }
   },
   "company": {
-      "one": {
-          "url": "/companies/:company-id",
-          "method": "GET",
-          "params": {
-            "$company-id": null
-          }
-      },
-      "one-by-universal-name": {
-          "url": "/companies/:universal-name",
-          "method": "GET",
-          "params": {
-            "$universal-name": null
-          }
-      },
-      "one-by-email-domain": {
-          "url": "/companies",
-          "method": "GET",
-          "params": {
-            "$email-domain": null
-          }
+    "current": {
+      "url": "/companies",
+      "method": "GET",
+      "params": {
+        "$url-field-selector": null,
+        "$is-company-admin": null,
+        "$start": null,
+        "$end": null
       }
+    },
+    "one": {
+        "url": "/companies/:company-id",
+        "method": "GET",
+        "params": {
+          "$company-id": null
+        }
+    },
+    "one-by-universal-name": {
+        "url": "/companies/:universal-name",
+        "method": "GET",
+        "params": {
+          "$universal-name": null
+        }
+    },
+    "one-by-email-domain": {
+      "url": "/companies",
+      "method": "GET",
+      "params": {
+        "$email-domain": null
+      }
+    },
+    "one-update": {
+        "url": "/companies/:company-id/updates",
+        "method": "GET",
+        "params": {
+          "$event-type": null,
+          "$start": null,
+          "$count": null
+        }
+    },
+    "one-update-comments": {
+        "url": "/companies/:company-id/updates/key=:company-update-key/update-comments",
+        "method": "GET",
+        "params": {
+          "$event-type": null          
+        }
+    },
+    "one-update-comments-like": {
+        "url": "/companies/:company-id/updates/key=:company-update-key/likes",
+        "method": "GET",
+        "params": {
+          "$event-type": null          
+        }
+    },
+    "one-shares": {
+        "url": "/companies/:company-id/shares",
+        "method": "GET",
+        "params": { }
+    },
+    "one-share-enabled": {
+        "url": "/companies/:company-id/is-company-share-enabled",
+        "method": "GET",
+        "params": { }
+    },
+    "current-share-enabled": {
+        "url": "/companies/:company-id/relation-to-viewer/is-company-share-enabled",
+        "method": "GET",
+        "params": { }
+    },
   }
 }
