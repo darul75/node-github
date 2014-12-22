@@ -39,7 +39,7 @@
       },
       "url-field-selector": {
         "type": "String",
-        "required": true,
+        "required": false,
         "validation": "",
         "invalidmsg": "",
         "description": ""
@@ -101,6 +101,13 @@
           "description": ""
       },
       "start": {
+          "type": "Number",
+          "required": false,
+          "validation": "^[0-9]+$",
+          "invalidmsg": "",
+          "description": ""
+      },
+      "end": {
           "type": "Number",
           "required": false,
           "validation": "^[0-9]+$",
@@ -384,6 +391,6 @@
         "url": "/companies/:company-id/relation-to-viewer/is-company-share-enabled",
         "method": "GET",
         "params": { }
-    },
+    }
   }
 }

@@ -18,7 +18,7 @@ describe("[people]", function() {
 
     beforeEach(function() {
         client = new Client({
-            version: "1.0"
+            version: "1"
         });
         client.authenticate({
             type: "oauth",
@@ -28,7 +28,9 @@ describe("[people]", function() {
 
     it("should successfully execute GET /people/~ (getCurrent)",  function(next) {
         client.people.getCurrent(
-            {},
+            {
+                url-field-selector: "String"
+            },
             function(err, res) {
                 Assert.equal(err, null);
                 // other assertions go here
@@ -69,7 +71,8 @@ describe("[people]", function() {
                 start: "Number",
                 count: "Number",
                 modified: "Boolean",
-                modified-since: "Date"
+                modified-since: "Date",
+                url-field-selector: "String"
             },
             function(err, res) {
                 Assert.equal(err, null);

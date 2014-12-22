@@ -1,6 +1,7 @@
 var http = require("http");
 var Url = require("url");
 var querystring = require("querystring");
+var queue = require("queue-async");
 
 var Client = require("../index");
 var OAuth2 = require("oauth").OAuth2;
@@ -16,79 +17,74 @@ var oauth = new OAuth2(clientId, secret, "https://www.linkedin.com/", "uas/oauth
 
 // for demo purposes use one global access token
 // in production this has to be stored in a user session
-var accessToken = "";
+var accessToken = undefined;
 
-http.createServer(function(req, res) {
-  var url = Url.parse(req.url);
-  var path = url.pathname;
-  var query = querystring.parse(url.query);
+var express = require('express');
+var app = express();
 
-  if (path == "/" || path.match(/^\/user\/?$/)) {
-    // redirect to github if there is no access token
-    if (!accessToken) {
-      res.writeHead(303, {
-        Location: oauth.getAuthorizeUrl({ 
-          redirect_uri: 'http://localhost:3000/linked-callback',
-          client_id:clientId,
-          scope:'r_fullprofile',
-          response_type:'code',
-          state:'DCEEFWF45453sdffef424'
-        })
-      });
-      res.end();
-      return;
-    }
+var server = app.listen(3000, function() {
 
+  var host = server.address().address
+  var port = server.address().port
+
+  console.log('Example app listening at http://%s:%s', host, port);
+});
+
+app.get('/', function (req, res) {
+  res.redirect(oauth.getAuthorizeUrl({ 
+    redirect_uri: 'http://localhost:3000/linked-callback',
+    client_id:clientId,
+    scope:'r_fullprofile',
+    response_type:'code',
+    state:'DCEEFWF45453sdffef424'
+  }));
+});
+
+app.get(/^\/linked-callback\/?$/, function (req, res) {
+  if (accessToken) {
+    res.send(200);
     return;
-  } 
-  // URL called by github after authenticating
-  else if (path.match(/^\/linked-callback\/?$/)) {
-    console.log();
-    // upgrade the code to an access token
-    oauth.getOAuthAccessToken(query.code, {            
+  }
+
+  oauth.getOAuthAccessToken(
+    req.query.code, 
+    { 
       grant_type:'authorization_code',
-      code:query.code,
+      code:req.query.code,
       redirect_uri: 'http://localhost:3000/linked-callback',
       client_id:clientId,                                           
       client_secret:secret
-    }, function (err, access_token, refresh_token) {
-      if (err) {
-        console.log(err);
-        res.writeHead(500);
+    }, 
+    function (err, access_token, refresh_token) {
+      if (err) {        
+        res.status(500);
         res.end(err + "");
         return;
       }
 
       accessToken = access_token;
 
-      console.log(accessToken);
       // authenticate github API
       github.authenticate({
         type: "oauth",
         token: accessToken
       });
-
-      // use github API            
-      github.people.getCurrent({"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions)'}, function(err, user) {
-        if (err) {
-          res.writeHead(err.code);
-          res.end(err + "");
-          return;
-        }
-        console.log(user);
-        // res.writeHead(200, {
-        //   Location: "/toto"
-        // });
-        res.end(user);
-      });
-
-          
+      res.send(200);    
     });
-    return;
-  }
+});
 
-  res.writeHead(404);
-  res.end("404 - Not found");
-}).listen(3000);
+app.get('/people', function (req, res) {
 
-console.log("listening at http://localhost:3000");
+  var q = queue(1);
+  
+  // use github API            
+  q.defer(github.people.getCurrent, {"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions)'});
+  q.defer(github.people.getCurrent, {"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions)'});
+  // q.defer(github.people.getCurrentConnections, {});
+  // q.defer(github.groups.getMemberShips, {});  
+  q.awaitAll(function(error, results) {     
+    res.json(results);
+  });
+
+  
+});

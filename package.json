@@ -22,7 +22,8 @@
         "supertest": "0.8.1",
         "grunt": "latest",
         "grunt-contrib-jshint": "latest",
-        "grunt-contrib-uglify": "latest"
+        "grunt-contrib-uglify": "latest",
+        "queue-async": "1.0.7"
     },
     "main" : ".",
     "scripts": {
