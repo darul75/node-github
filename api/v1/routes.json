@@ -323,7 +323,7 @@
     }
   },
   "company": {
-    "current": {
+    "get-current": {
       "url": "/companies",
       "method": "GET",
       "params": {

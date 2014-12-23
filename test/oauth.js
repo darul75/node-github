@@ -76,14 +76,60 @@ app.get(/^\/linked-callback\/?$/, function (req, res) {
 app.get('/people', function (req, res) {
 
   var q = queue(1);
+
+  var ignoreError = function (task, callback) {
+    task(function(error, result) {
+      return callback(null, result); // ignore error
+    });
+  };
+
+  var wrapper = function(callback) {
+    github.people.getCurrent({"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions)'}, function(err, result) {
+      result['_NAME'] = 'github.people.getCurrent';
+      callback(null, result);
+    });    
+  };
+
+  var wrapper2 = function(callback) {
+    github.groups.getMemberships({}, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.groups.getMemberships';            
+      callback(null, result);
+    });
+  };
+
+  var wrapper3 = function(callback) {
+    github.company.getCurrent({}, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.company.getCurrent';
+      callback(null, result);
+    });
+  };
+
+  var wrapper4 = function(callback) {
+    github.company.one({"company-id": 162479}, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.company.one';
+      callback(null, result);
+    });
+  };
   
   // use github API            
-  q.defer(github.people.getCurrent, {"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions)'});
+  q.defer(ignoreError, wrapper);
+  q.defer(ignoreError, wrapper2);
+  q.defer(ignoreError, wrapper3);
+  q.defer(ignoreError, wrapper4);
+  // q.defer(github.people.getCurrent, {"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions)'});
   // q.defer(github.people.getCurrent, {"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions)'});
   // q.defer(github.people.getCurrentConnections, {});
-  q.defer(github.groups.getMemberships, {});  
+  // q.defer(github.groups.getMemberships, {});  
+  // q.defer(github.groups.getMemberships, {});  
   q.awaitAll(function(error, results) {     
-    res.json(error);
+    if (error)
+      res.json(error);
     res.json(results);
   });
 
