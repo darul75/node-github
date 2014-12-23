@@ -79,10 +79,11 @@ app.get('/people', function (req, res) {
   
   // use github API            
   q.defer(github.people.getCurrent, {"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions)'});
-  q.defer(github.people.getCurrent, {"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions)'});
+  // q.defer(github.people.getCurrent, {"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions)'});
   // q.defer(github.people.getCurrentConnections, {});
-  // q.defer(github.groups.getMemberShips, {});  
+  q.defer(github.groups.getMemberships, {});  
   q.awaitAll(function(error, results) {     
+    res.json(error);
     res.json(results);
   });
 
