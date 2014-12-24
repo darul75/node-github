@@ -188,11 +188,12 @@
   },
 
   "people": {
-    "get-current": {
+    "get": {
         "url": "/people/~",          
         "method": "GET",
         "params": {
-          "$url-field-selector": null
+          "$url-field-selector": null,
+          "$secure-urls": null
         }
     },
     "get-member": {
@@ -202,7 +203,7 @@
           "$id": null
         }
     },
-    "get-member-public": {
+    "get-public": {
         "url": "/people/",
         "method": "GET",
         "params": {
@@ -323,14 +324,14 @@
     }
   },
   "company": {
-    "get-current": {
+    "all": {
       "url": "/companies",
       "method": "GET",
       "params": {
         "$url-field-selector": null,
         "$is-company-admin": null,
         "$start": null,
-        "$end": null
+        "$count": null
       }
     },
     "one": {
@@ -341,7 +342,7 @@
         }
     },
     "one-by-universal-name": {
-        "url": "/companies/:universal-name",
+        "url": "/companies/",
         "method": "GET",
         "params": {
           "$universal-name": null
@@ -358,6 +359,7 @@
         "url": "/companies/:company-id/updates",
         "method": "GET",
         "params": {
+          "$company-id": null,
           "$event-type": null,
           "$start": null,
           "$count": null
@@ -367,30 +369,62 @@
         "url": "/companies/:company-id/updates/key=:company-update-key/update-comments",
         "method": "GET",
         "params": {
-          "$event-type": null          
+          "$company-id": null,
+          "$company-update-key": null,
+          "$event-type": null
         }
     },
     "one-update-comments-like": {
-        "url": "/companies/:company-id/updates/key=:company-update-key/likes",
-        "method": "GET",
-        "params": {
-          "$event-type": null          
-        }
+      "url": "/companies/:company-id/updates/key=:company-update-key/likes",
+      "method": "GET",
+      "params": {
+        "$company-id": null,
+        "$company-update-key": null,
+        "$event-type": null          
+      }
     },
     "one-shares": {
-        "url": "/companies/:company-id/shares",
-        "method": "GET",
-        "params": { }
+      "url": "/companies/:company-id/shares",
+      "method": "POST",
+      "params": {
+        "$company-id": null,
+        "comment": {
+          "type": "String",
+          "required": false,
+          "allow-empty": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        },
+        "visibility": {
+          "type": "String",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        },
+        "content": {
+          "type": "Json",
+          "required": false,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        }
+      }
     },
     "one-share-enabled": {
-        "url": "/companies/:company-id/is-company-share-enabled",
-        "method": "GET",
-        "params": { }
+      "url": "/companies/:company-id/is-company-share-enabled",
+      "method": "GET",
+      "params": {
+        "$company-id": null
+      }
     },
     "current-share-enabled": {
-        "url": "/companies/:company-id/relation-to-viewer/is-company-share-enabled",
-        "method": "GET",
-        "params": { }
+      "url": "/companies/:company-id/relation-to-viewer/is-company-share-enabled",
+      "method": "GET",
+      "params": {
+        "$company-id": null
+      }
     }
   }
 }
