@@ -1,12 +1,3 @@
-/*
- * Copyright 2012 Cloud9 IDE, Inc.
- *
- * This product includes software developed by
- * Cloud9 IDE, Inc (http://c9.io).
- *
- * Author: Mike de Boer <info@mikedeboer.nl>
- */
-
 "use strict";
 
 var Assert = require("assert");
@@ -26,132 +17,146 @@ describe("[company]", function() {
         });
     });
 
-    it("should successfully execute GET /companies (current)",  function(next) {
-        client.company.current(
-            {
+it("should successfully execute GET /companies (all)",  function(next) {
+    client.company.all(
+        {
                 url-field-selector: "String",
                 is-company-admin: "Boolean",
                 start: "Number",
-                end: "Number"
+                count: "Number"
             },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /companies/:company-id (one)",  function(next) {
-        client.company.one(
-            {
+it("should successfully execute GET /companies/:company-id (one)",  function(next) {
+    client.company.one(
+        {
                 company-id: "String"
             },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /companies/:universal-name (oneByUniversalName)",  function(next) {
-        client.company.oneByUniversalName(
-            {
+it("should successfully execute GET /companies/ (oneByUniversalName)",  function(next) {
+    client.company.oneByUniversalName(
+        {
                 universal-name: "String"
             },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /companies (oneByEmailDomain)",  function(next) {
-        client.company.oneByEmailDomain(
-            {
+it("should successfully execute GET /companies (oneByEmailDomain)",  function(next) {
+    client.company.oneByEmailDomain(
+        {
                 email-domain: "String"
             },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /companies/:company-id/updates (oneUpdate)",  function(next) {
-        client.company.oneUpdate(
-            {
+it("should successfully execute GET /companies/:company-id/updates (oneUpdate)",  function(next) {
+    client.company.oneUpdate(
+        {
+                company-id: "String",
                 event-type: "String",
                 start: "Number",
                 count: "Number"
             },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /companies/:company-id/updates/key=:company-update-key/update-comments (oneUpdateComments)",  function(next) {
-        client.company.oneUpdateComments(
-            {
+it("should successfully execute GET /companies/:company-id/updates/key=:company-update-key/update-comments (oneUpdateComments)",  function(next) {
+    client.company.oneUpdateComments(
+        {
+                company-id: "String",
+                company-update-key: "String",
                 event-type: "String"
             },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /companies/:company-id/updates/key=:company-update-key/likes (oneUpdateCommentsLike)",  function(next) {
-        client.company.oneUpdateCommentsLike(
-            {
+it("should successfully execute GET /companies/:company-id/updates/key=:company-update-key/likes (oneUpdateCommentsLike)",  function(next) {
+    client.company.oneUpdateCommentsLike(
+        {
+                company-id: "String",
+                company-update-key: "String",
                 event-type: "String"
             },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /companies/:company-id/shares (oneShares)",  function(next) {
-        client.company.oneShares(
-            {},
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+it("should successfully execute POST /companies/:company-id/shares (oneShares)",  function(next) {
+    client.company.oneShares(
+        {
+                company-id: "String",
+                comment: "String",
+                visibility: "String",
+                content: "Json"
+            },
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /companies/:company-id/is-company-share-enabled (oneShareEnabled)",  function(next) {
-        client.company.oneShareEnabled(
-            {},
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+it("should successfully execute GET /companies/:company-id/is-company-share-enabled (oneShareEnabled)",  function(next) {
+    client.company.oneShareEnabled(
+        {
+                company-id: "String"
+            },
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /companies/:company-id/relation-to-viewer/is-company-share-enabled (currentShareEnabled)",  function(next) {
-        client.company.currentShareEnabled(
-            {},
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+it("should successfully execute GET /companies/:company-id/relation-to-viewer/is-company-share-enabled (currentShareEnabled)",  function(next) {
+    client.company.currentShareEnabled(
+        {
+                company-id: "String"
+            },
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 });

@@ -50,9 +50,9 @@ var main = module.exports = function(versions, tests, restore) {
     " *  ##### Params on the `msg` object:",
     " * "
     ];
-    comment.push(" *  - headers (Object): Optional. Key/ value pair "
-      + "of request headers to pass along with the HTTP request. Valid headers are: "
-      + "'" + defines["request-headers"].join("', '") + "'.");
+    // comment.push(" *  - headers (Object): Optional. Key/ value pair "
+    //   + "of request headers to pass along with the HTTP request. Valid headers are: "
+    //   + "'" + defines["request-headers"].join("', '") + "'.");
     if (!params.length)
       comment.push(" *  No other params, simply pass an empty Object literal `{}`");
     var paramName, def, line;
@@ -81,7 +81,7 @@ var main = module.exports = function(versions, tests, restore) {
       comment.push(line);
     }
 
-    return comment.join("\n") + "\n **/\n";
+    return comment.join("\n");
   }
 
   function getParams(paramsStruct, indent) {
@@ -139,6 +139,15 @@ var main = module.exports = function(versions, tests, restore) {
         parts.splice(0, 2);
         var funcName = Util.toCamelCase(parts.join("-"));
         apidocs += createComment(block.params, section, funcName);
+
+        // URL and Doc
+        apidocs += "\n * \n *  ##### See Also\n * \n";
+        apidocs += " * - Rest api url `" + block.url + "\n";
+        apidocs += " * - Documentation " + "[link](" + block["doc-url"] + ")" + "\n";
+        apidocs += " **/\n";
+
+
+        console.log(block.url);
 
         // add test to the testSections
         if (!testSections[section])

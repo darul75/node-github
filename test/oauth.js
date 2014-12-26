@@ -8,22 +8,27 @@ var OAuth2 = require("oauth").OAuth2;
 
 var github = new Client({
   version: "1",
-  pathPrefix:"v1",
-  proxy: {
-    host: '10.115.100.103',
-    port: 8080
-  }
+  pathPrefix:"v1"  
 });
+
+// var github = new Client({
+//   version: "1",
+//   pathPrefix:"v1",
+//   proxy: {
+//     host: '10.115.100.103',
+//     port: 8080
+//   }
+// });
 
 var clientId = "7782fkexleri0s";
 var secret = "29X0lbFr6GvoJM8S";
 var oauth = new OAuth2(clientId, secret, "https://www.linkedin.com/", "uas/oauth2/authorization", "uas/oauth2/accessToken");
-oauth.setTunnel({
-  proxy: {
-    host: '10.115.100.103',
-    port: 8080
-  }
-});
+// oauth.setTunnel({
+//   proxy: {
+//     host: '10.115.100.103',
+//     port: 8080
+//   }
+// });
 
 // for demo purposes use one global access token
 // in production this has to be stored in a user session
@@ -94,10 +99,28 @@ app.get('/people', function (req, res) {
   };
 
   var peopleCurrent = function(callback) {
-    github.people.get({"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions)'}, function(err, result) {
+    github.people.getCurrent({"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions,public-profile-url)'}, function(err, result) {
       if (err)
         result = {"error" : err};
       result['_NAME'] = 'github.people.get';
+      callback(null, result);
+    });    
+  };
+
+  var peopleMemberByUrl = function(callback) {
+    github.people.getMember({"url": 'https://www.linkedin.com/pub/julien-valery/70/624/b54', 'secure-urls': true, "url-field-selector": ':(headline,first-name,last-name)'}, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.people.get';
+      callback(null, result);
+    });    
+  };
+
+  var peopleMemberById = function(callback) {
+    github.people.getMember({"id": '2JVl6yrion', 'secure-urls': true,"url-field-selector": ':(headline,first-name,last-name)'}, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.people.getMember';
       callback(null, result);
     });    
   };
@@ -106,31 +129,46 @@ app.get('/people', function (req, res) {
     github.people.getCurrentConnections({"url-field-selector": ':(headline,first-name,last-name)'}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.people.get-current-connections';
+      result['_NAME'] = 'github.people.getCurrentConnections';
+      callback(null, result);
+    });    
+  };  
+
+  var peopleMemberConnectionsById = function(callback) {
+    github.people.getMemberConnections({
+      "idOrUrl": '2JVl6yrion',
+      "start": 0,
+      "count": 5
+    }, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.people.peopleMemberConnectionsById';
       callback(null, result);
     });    
   };
 
-  var peopleMember = function(callback) {
-    github.people.getMember({"id": '2JVl6yrion'}, function(err, result) {
+  var peopleMemberConnectionsByUrl = function(callback) {
+    github.people.getMemberConnections({
+      "idOrUrl": 'https://www.linkedin.com/pub/julien-valery/70/624/b54',
+      "modified":"new",
+      "modified-since":1267401600000,
+      "start": 0,
+      "count": 5
+    }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.people.getMember';
+      result['_NAME'] = 'github.people.peopleMemberConnectionsByUrl';
       callback(null, result);
     });    
   };
 
-  var peopleMemberConnections = function(callback) {
-    github.people.getMemberConnections({"id": '2JVl6yrion'}, function(err, result) {
-      if (err)
-        result = {"error" : err};
-      result['_NAME'] = 'github.people.getMember';
-      callback(null, result);
-    });    
-  };    
-
-  var groupsMembership = function(callback) {
-    github.groups.getMemberships({}, function(err, result) {
+  var groupsCurrentMembership = function(callback) {
+    github.groups.getMemberships({
+      "membership-state": "owner",
+      "start": 0,
+      "count": 5,
+      "url-field-selector": ":(group:(id,name,posts;count=5,site-group-url))"
+    }, function(err, result) {
       if (err)
         result = {"error" : err};
       result['_NAME'] = 'github.groups.getMemberships';            
@@ -138,12 +176,40 @@ app.get('/people', function (req, res) {
     });
   };
 
+  var groupsCurrentMembershipSettings = function(callback) {
+    github.groups.getMembershipsDetails({
+      "group-id": "12435",          
+      "url-field-selector": ":(show-group-logo-in-profile,email-digest-frequency,email-announcements-from-managers,allow-messages-from-members,email-for-every-new-post)"
+    }, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.groups.getMemberships';            
+      callback(null, result);
+    });
+  };
+
+  var groupsOne = function(callback) {
+    github.groups.getDetails({
+      "group-id": "12435",
+      "url-field-selector": ":(id,name,site-group-url,posts:(id,summary,creator))"      
+    }, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.groups.one';            
+      callback(null, result);
+    });
+  };
+
   // use github API            
   q.defer(ignoreError, peopleCurrent);
-  q.defer(ignoreError, peopleCurrentConnections);
-  q.defer(ignoreError, peopleMember);
-  q.defer(ignoreError, peopleMemberConnections);
-  q.defer(ignoreError, groupsMembership);
+  q.defer(ignoreError, peopleMemberById);
+  q.defer(ignoreError, peopleMemberByUrl);
+  q.defer(ignoreError, peopleCurrentConnections);  
+  q.defer(ignoreError, peopleMemberConnectionsById);
+  q.defer(ignoreError, peopleMemberConnectionsByUrl);
+  q.defer(ignoreError, groupsCurrentMembership);
+  q.defer(ignoreError, groupsCurrentMembershipSettings);  
+  q.defer(ignoreError, groupsOne);
   
   // q.defer(github.groups.getMemberships, {});  
   q.awaitAll(function(error, results) {     

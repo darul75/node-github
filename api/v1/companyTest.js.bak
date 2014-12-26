@@ -18,12 +18,28 @@ describe("[company]", function() {
 
     beforeEach(function() {
         client = new Client({
-            version: "1.0"
+            version: "1"
         });
         client.authenticate({
             type: "oauth",
             token: token
         });
+    });
+
+    it("should successfully execute GET /companies (current)",  function(next) {
+        client.company.current(
+            {
+                url-field-selector: "String",
+                is-company-admin: "Boolean",
+                start: "Number",
+                end: "Number"
+            },
+            function(err, res) {
+                Assert.equal(err, null);
+                // other assertions go here
+                next();
+            }
+        );
     });
 
     it("should successfully execute GET /companies/:company-id (one)",  function(next) {
@@ -57,6 +73,80 @@ describe("[company]", function() {
             {
                 email-domain: "String"
             },
+            function(err, res) {
+                Assert.equal(err, null);
+                // other assertions go here
+                next();
+            }
+        );
+    });
+
+    it("should successfully execute GET /companies/:company-id/updates (oneUpdate)",  function(next) {
+        client.company.oneUpdate(
+            {
+                event-type: "String",
+                start: "Number",
+                count: "Number"
+            },
+            function(err, res) {
+                Assert.equal(err, null);
+                // other assertions go here
+                next();
+            }
+        );
+    });
+
+    it("should successfully execute GET /companies/:company-id/updates/key=:company-update-key/update-comments (oneUpdateComments)",  function(next) {
+        client.company.oneUpdateComments(
+            {
+                event-type: "String"
+            },
+            function(err, res) {
+                Assert.equal(err, null);
+                // other assertions go here
+                next();
+            }
+        );
+    });
+
+    it("should successfully execute GET /companies/:company-id/updates/key=:company-update-key/likes (oneUpdateCommentsLike)",  function(next) {
+        client.company.oneUpdateCommentsLike(
+            {
+                event-type: "String"
+            },
+            function(err, res) {
+                Assert.equal(err, null);
+                // other assertions go here
+                next();
+            }
+        );
+    });
+
+    it("should successfully execute GET /companies/:company-id/shares (oneShares)",  function(next) {
+        client.company.oneShares(
+            {},
+            function(err, res) {
+                Assert.equal(err, null);
+                // other assertions go here
+                next();
+            }
+        );
+    });
+
+    it("should successfully execute GET /companies/:company-id/is-company-share-enabled (oneShareEnabled)",  function(next) {
+        client.company.oneShareEnabled(
+            {},
+            function(err, res) {
+                Assert.equal(err, null);
+                // other assertions go here
+                next();
+            }
+        );
+    });
+
+    it("should successfully execute GET /companies/:company-id/relation-to-viewer/is-company-share-enabled (currentShareEnabled)",  function(next) {
+        client.company.currentShareEnabled(
+            {},
             function(err, res) {
                 Assert.equal(err, null);
                 // other assertions go here

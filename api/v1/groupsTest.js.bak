@@ -18,7 +18,7 @@ describe("[groups]", function() {
 
     beforeEach(function() {
         client = new Client({
-            version: "1.0"
+            version: "1"
         });
         client.authenticate({
             type: "oauth",
@@ -33,7 +33,8 @@ describe("[groups]", function() {
                 start: "Number",
                 count: "Number",
                 modified: "Boolean",
-                modified-since: "Date"
+                modified-since: "Date",
+                url-field-selector: "String"
             },
             function(err, res) {
                 Assert.equal(err, null);
@@ -48,7 +49,8 @@ describe("[groups]", function() {
             {
                 membership-state: "Array",
                 start: "Number",
-                count: "Number"
+                count: "Number",
+                url-field-selector: "String"
             },
             function(err, res) {
                 Assert.equal(err, null);
@@ -118,7 +120,8 @@ describe("[groups]", function() {
                 start: "Number",
                 count: "Number",
                 role: "Array",
-                category: "Array"
+                category: "Array",
+                url-field-selector: "String"
             },
             function(err, res) {
                 Assert.equal(err, null);

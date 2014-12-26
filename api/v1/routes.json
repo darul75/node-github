@@ -29,111 +29,121 @@
       "Accept",
       "X-Linked-OTP"
     ],
+    "profile-request-headers": [
+      "Accept-Language HTTP header"
+    ],
     "params": {
       "files": {
-          "type": "Json",
-          "required": true,
-          "validation": "",
-          "invalidmsg": "",
-          "description": "Files that make up this gist. The key of which should be a required string filename and the value another required hash with parameters: 'content'"
+        "type": "Json",
+        "required": true,
+        "validation": "",
+        "invalidmsg": "",
+        "description": "Files that make up this gist. The key of which should be a required string filename and the value another required hash with parameters: 'content'"
       },
       "url-field-selector": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "Explicitly request the data you want, more details here : https://developer.linkedin.com/documents/understanding-field-selectors"
       },
       "id": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
+      },
+      "idOrUrl": {
+        "type": "String",
+        "required": true,
+        "validation": "",
+        "invalidmsg": "",
+        "description": "Profile Id or public URL"
+      },      
+      "group-id": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
+      },
+      "person-id": {
         "type": "String",
         "required": true,
         "validation": "",
         "invalidmsg": "",
         "description": ""
       },
-      "group-id": {
-          "type": "String",
-          "required": false,
-          "validation": "",
-          "invalidmsg": "",
-          "description": ""
-      },
-      "person-id": {
-          "type": "String",
-          "required": true,
-          "validation": "",
-          "invalidmsg": "",
-          "description": ""
-      },
       "company-id": {
-          "type": "String",
-          "required": true,
-          "validation": "",
-          "invalidmsg": "",
-          "description": ""
+        "type": "String",
+        "required": true,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
       },
       "universal-name": {
-          "type": "String",
-          "required": true,
-          "validation": "",
-          "invalidmsg": "",
-          "description": ""
+        "type": "String",
+        "required": true,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
       },
       "email-domain": {
-          "type": "String",
-          "required": true,
-          "validation": "",
-          "invalidmsg": "",
-          "description": ""
+        "type": "String",
+        "required": true,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
       },
       "url": {
-          "type": "String",
-          "required": true,
-          "validation": "",
-          "invalidmsg": "",
-          "description": ""
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": "Public profile URL"
       },
       "secure-urls": {
-          "type": "Boolean",
-          "required": false,
-          "validation": "",
-          "invalidmsg": "",
-          "description": ""
+        "type": "Boolean",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": "Indicate that you want the URLs in your response to be HTTPS"
       },
       "start": {
-          "type": "Number",
-          "required": false,
-          "validation": "^[0-9]+$",
-          "invalidmsg": "",
-          "description": ""
+        "type": "Number",
+        "required": false,
+        "validation": "^[0-9]+$",
+        "invalidmsg": "",
+        "description": ""
       },
       "end": {
-          "type": "Number",
-          "required": false,
-          "validation": "^[0-9]+$",
-          "invalidmsg": "",
-          "description": ""
+        "type": "Number",
+        "required": false,
+        "validation": "^[0-9]+$",
+        "invalidmsg": "",
+        "description": ""
       },
       "count": {
-          "type": "Number",
-          "required": false,
-          "validation": "^[0-9]+$",
-          "invalidmsg": "",
-          "description": ""
+        "type": "Number",
+        "required": false,
+        "validation": "^[0-9]+$",
+        "invalidmsg": "",
+        "description": ""
       },
       "modified": {
-          "type": "Boolean",
-          "required": false,
-          "validation": "",
-          "invalidmsg": "",
-          "description": "Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": "Values are: 'updated' or 'new'"
       },
       "modified-since": {
-          "type": "Date",
-          "required": false,
-          "validation": "",
-          "invalidmsg": "",
-          "description": "Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+        "type": "Number",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": "In miliseconds since epoch"
       },
       "membership-state": {
         "type": "Array",
@@ -186,70 +196,32 @@
       }
     }
   },
-
   "people": {
-    "get": {
-        "url": "/people/~",          
-        "method": "GET",
-        "params": {
-          "$url-field-selector": null,
-          "$secure-urls": null
-        }
-    },
-    "get-member": {
-        "url": "/people/",
-        "method": "GET",
-        "params": {
-          "$id": null
-        }
-    },
-    "get-public": {
-        "url": "/people/",
-        "method": "GET",
-        "params": {
-          "$url": null
-        }
-    },
-    "get-current-connections": {
-        "url": "/people/~/connections",
-        "method": "GET",
-        "params": {
-          "$start": null,
-          "$count": null,
-          "$modified": null,
-          "$modified-since":null,
-          "$url-field-selector": null
-        }
-    },
-    "get-member-connections": {
-        "url": "/people/:id/connections",
-        "method": "GET",
-        "params": {
-          "$id": null,
-          "$start": null,
-          "$count": null,
-          "$modified": null,
-          "$modified-since":null
-        }
-    },
-    "get-member-public-connections": {
-        "url": "/people/",
-        "method": "GET",
-        "params": {
-          "$url": null,
-          "$start": null,
-          "$count": null,
-          "$modified": null,
-          "$modified-since":null
-        }
-    }
-  },
-  "groups": {
-    "one": {
-      "url": "/groups/:id",
+    "get-current": {            
+      "url": "/people/~",
+      "doc-url": "https://developer.linkedin.com/documents/profile-api",
       "method": "GET",
       "params": {
+        "$url-field-selector": null,
+        "$secure-urls": null
+      }
+    },
+    "get-member": {
+      "url": "/people/",
+      "doc-url": "https://developer.linkedin.com/documents/profile-api",
+      "method": "GET",
+      "params": {
+        "$id": null,
         "$url": null,
+        "$url-field-selector": null,
+        "$secure-urls": null
+      }
+    },    
+    "get-current-connections": {
+      "url": "/people/~/connections",
+      "doc-url": "https://developer.linkedin.com/documents/connections-api",
+      "method": "GET",
+      "params": {
         "$start": null,
         "$count": null,
         "$modified": null,
@@ -257,8 +229,57 @@
         "$url-field-selector": null
       }
     },
+    "get-member-connections": {
+      "url": "/people/:idOrUrl/connections",
+      "doc-url": "https://developer.linkedin.com/documents/connections-api",
+      "method": "GET",
+      "params": {
+        "$idOrUrl": null,
+        "$start": null,
+        "$count": null,
+        "$modified": null,
+        "$modified-since":null
+      }
+    },
+    "search": {
+      "url": "/people-search",
+      "doc-url": "https://developer.linkedin.com/documents/people-search-api",
+      "method": "GET",
+      "params": {
+        "$keywords": null,
+        "$first-name": null,
+        "$last-name": null,
+        "$school-name": null,
+        "$start": null,
+        "$count": null,
+        "$sort":null
+      }
+    }    
+  },
+  "groups": {
+    "get-details": {
+      "url": "/groups/:group-id",
+      "method": "GET",
+      "params": {
+        "$group-id": null,
+        "$start": null,
+        "$count": null,
+        "$modified": null,
+        "$modified-since":null,
+        "$url-field-selector": null
+      }
+    },
+    "get-memberships-details": {
+      "url": "/people/~/group-memberships/:group-id",
+      "method": "GET",
+      "params": {        
+        "$group-id": null,
+        "$url-field-selector": null
+      }
+    },
     "get-memberships": {
       "url": "/people/~/group-memberships",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api",
       "method": "GET",
       "params": {
         "$membership-state": null,
@@ -266,37 +287,8 @@
         "$count": null,
         "$url-field-selector": null
       }
-    },
-    "get-settings": {
-      "url": "/people/~/group-memberships/:group-id",
-      "method": "GET",
-      "params": {
-        "$membership-state": null,
-        "$group-id": null,
-        "$start": null,
-        "$count": null
-      }
-    },
-    "settings": {
-      "url": "/people/~/group-memberships/:group-id",
-      "method": "PUT",
-      "params": {        
-        "$group-id": null
-      }
-    },
-    "add-group": {
-      "url": "/people/~/group-memberships",
-      "method": "POST",
-      "params": {}
-    },
-    "remove-group": {
-      "url": "/people/~/group-memberships",
-      "method": "DELETE",
-      "params": {
-        "$group-id": null
-      }
-    },
-    "get-posts": {
+    }, 
+   "get-posts": {
       "url": "/groups/{group-id}/posts",
       "method": "GET",
       "params": {
@@ -315,6 +307,34 @@
         "$group-id": null
       }
     },
+    "get-suggestions-posts": {
+      "url": "/people/~/suggestions/groups/{group-id}/posts",
+      "method": "GET",
+      "params": {
+        "$group-id": null
+      }
+    },
+    "get-suggestions": {
+      "url": "/people/~/suggestions/groups/{group-id}/posts",
+      "method": "GET",
+      "params": {
+        "$group-id": null
+      }
+    },
+    "add-group": {
+      "url": "/people/~/group-memberships",
+      "method": "POST",
+      "params": {}
+    },
+    "remove-group": {
+      "url": "/people/~/group-memberships",
+      "method": "DELETE",
+      "params": {
+        "$group-id": null
+      }
+    },
+   
+    
     "get-suggestions-posts": {
       "url": "/people/~/group-memberships/{group-id}/posts",
       "method": "GET",
