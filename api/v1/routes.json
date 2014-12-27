@@ -287,9 +287,19 @@
         "$count": null,
         "$url-field-selector": null
       }
-    }, 
+    },
+    "update": {
+      "url": "/people/~/group-memberships/:group-id",
+      "method": "PUT",
+      "params": {}
+    },
+    "add": {
+      "url": "/people/~/group-memberships",
+      "method": "POST",
+      "params": {}
+    },
    "get-posts": {
-      "url": "/groups/{group-id}/posts",
+      "url": "/groups/:group-id/posts",
       "method": "GET",
       "params": {
         "$group-id": null,
@@ -300,48 +310,104 @@
         "$url-field-selector": null
       }
     },
-    "get-memberships-posts": {
-      "url": "/people/~/group-memberships/{group-id}/posts",
+    "get-post": {
+      "url": "/posts/:post-id",
+      "method": "GET",
+      "params": {        
+        "$post-id": null,           
+        "$url-field-selector": null
+      }
+    },
+    "get-posts-comments": {
+      "url": "/posts/:post-id/comments",
       "method": "GET",
       "params": {
-        "$group-id": null
+        "$group-id": null,
+        "$post-id": null,
+        "$start": null,
+        "$count": null,        
+        "$url-field-selector": null
+      }
+    },
+    "like-post": {
+      "url": "/posts/:post-id/relation-to-viewer/is-liked",
+      "method": "PUT",
+      "params": {
+        "$post-id": null,
+      }
+    },
+    "follow-post": {
+      "url": "posts/:post-id/relation-to-viewer/is-following",
+      "method": "PUT",
+      "params": {
+        "$post-id": null,
+      }
+    },
+    "flag-post": {
+      "url": "posts/:post-id/category/code",
+      "method": "PUT",
+      "params": {
+        "$post-id": null,
+      }
+    },
+    "remove-flag-post": {
+      "url": "posts/:post-id",
+      "method": "DELETE",
+      "params": {
+        "$post-id": null,
+      }
+    },
+    "get-memberships-posts": {
+      "url": "/people/~/group-memberships/:group-id/posts",
+      "method": "GET",
+      "params": {
+        "$group-id": null,
+        "$start": null,
+        "$count": null,
+        "$role": null,
+        "$category": null,
+        "$url-field-selector": null
       }
     },
     "get-suggestions-posts": {
-      "url": "/people/~/suggestions/groups/{group-id}/posts",
+      "url": "/people/~/suggestions/groups/:group-id/posts",
       "method": "GET",
       "params": {
-        "$group-id": null
+        "$group-id": null,
+        "$start": null,
+        "$count": null,
+        "$role": null,
+        "$category": null,
+        "$url-field-selector": null
       }
     },
-    "get-suggestions": {
-      "url": "/people/~/suggestions/groups/{group-id}/posts",
-      "method": "GET",
-      "params": {
-        "$group-id": null
-      }
-    },
-    "add-group": {
-      "url": "/people/~/group-memberships",
+    "add-post": {
+      "url": "/people/~/groups/:group-id/posts",
       "method": "POST",
       "params": {}
     },
-    "remove-group": {
-      "url": "/people/~/group-memberships",
+
+    "get-from-suggestions": {
+      "url": "/people/~/suggestions/groups/",
+      "method": "GET",
+      "params": {
+        "$group-id": null
+      }
+    },
+    "remove-suggestions": {
+      "url": "/people/~/suggestions/groups/:id",
+      "method": "DELETE",
+      "params": {
+        "$id": null
+      }
+    },
+    "remove": {
+      "url": "/people/~/group-memberships/:group-id",
       "method": "DELETE",
       "params": {
         "$group-id": null
       }
-    },
-   
-    
-    "get-suggestions-posts": {
-      "url": "/people/~/group-memberships/{group-id}/posts",
-      "method": "GET",
-      "params": {
-        "$group-id": null
-      }
-    }
+    }    
   },
   "company": {
     "all": {
