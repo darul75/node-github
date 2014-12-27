@@ -259,18 +259,16 @@
   "groups": {
     "get-details": {
       "url": "/groups/:group-id",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#profiledetails",
       "method": "GET",
       "params": {
-        "$group-id": null,
-        "$start": null,
-        "$count": null,
-        "$modified": null,
-        "$modified-since":null,
+        "$group-id": null,        
         "$url-field-selector": null
       }
     },
     "get-memberships-details": {
       "url": "/people/~/group-memberships/:group-id",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#membergroups",
       "method": "GET",
       "params": {        
         "$group-id": null,
@@ -279,7 +277,7 @@
     },
     "get-memberships": {
       "url": "/people/~/group-memberships",
-      "doc-url": "https://developer.linkedin.com/documents/groups-api",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#membergroups",
       "method": "GET",
       "params": {
         "$membership-state": null,
@@ -288,18 +286,29 @@
         "$url-field-selector": null
       }
     },
-    "update": {
+    "join": {
       "url": "/people/~/group-memberships/:group-id",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#membergroups",
       "method": "PUT",
       "params": {}
     },
-    "add": {
+    "join-advanced": {
       "url": "/people/~/group-memberships",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#membergroups",
       "method": "POST",
       "params": {}
     },
+    "remove": {
+      "url": "/people/~/group-memberships/:group-id",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#membergroups",
+      "method": "DELETE",
+      "params": {
+        "$group-id": null
+      }
+    }, 
    "get-posts": {
       "url": "/groups/:group-id/posts",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#groupposts",
       "method": "GET",
       "params": {
         "$group-id": null,
@@ -310,55 +319,9 @@
         "$url-field-selector": null
       }
     },
-    "get-post": {
-      "url": "/posts/:post-id",
-      "method": "GET",
-      "params": {        
-        "$post-id": null,           
-        "$url-field-selector": null
-      }
-    },
-    "get-posts-comments": {
-      "url": "/posts/:post-id/comments",
-      "method": "GET",
-      "params": {
-        "$group-id": null,
-        "$post-id": null,
-        "$start": null,
-        "$count": null,        
-        "$url-field-selector": null
-      }
-    },
-    "like-post": {
-      "url": "/posts/:post-id/relation-to-viewer/is-liked",
-      "method": "PUT",
-      "params": {
-        "$post-id": null,
-      }
-    },
-    "follow-post": {
-      "url": "posts/:post-id/relation-to-viewer/is-following",
-      "method": "PUT",
-      "params": {
-        "$post-id": null,
-      }
-    },
-    "flag-post": {
-      "url": "posts/:post-id/category/code",
-      "method": "PUT",
-      "params": {
-        "$post-id": null,
-      }
-    },
-    "remove-flag-post": {
-      "url": "posts/:post-id",
-      "method": "DELETE",
-      "params": {
-        "$post-id": null,
-      }
-    },
-    "get-memberships-posts": {
+   "get-memberships-posts": {
       "url": "/people/~/group-memberships/:group-id/posts",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#groupposts",
       "method": "GET",
       "params": {
         "$group-id": null,
@@ -371,6 +334,7 @@
     },
     "get-suggestions-posts": {
       "url": "/people/~/suggestions/groups/:group-id/posts",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#groupposts",
       "method": "GET",
       "params": {
         "$group-id": null,
@@ -381,14 +345,94 @@
         "$url-field-selector": null
       }
     },
-    "add-post": {
+   "add-post": {
       "url": "/people/~/groups/:group-id/posts",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#create",
       "method": "POST",
       "params": {}
+    },    
+    "get-post": {
+      "url": "/posts/:post-id",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#post",
+      "method": "GET",
+      "params": {        
+        "$post-id": null,           
+        "$url-field-selector": null
+      }
     },
-
+    "get-posts-comments": {
+      "url": "/posts/:post-id/comments",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#post",
+      "method": "GET",
+      "params": {
+        "$group-id": null,
+        "$post-id": null,
+        "$start": null,
+        "$count": null,        
+        "$url-field-selector": null
+      }
+    },
+    "like-post": {
+      "url": "/posts/:post-id/relation-to-viewer/is-liked",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#post",
+      "method": "PUT",
+      "params": {
+        "$post-id": null,
+      }
+    },
+    "follow-post": {
+      "url": "/posts/:post-id/relation-to-viewer/is-following",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#post",
+      "method": "PUT",
+      "params": {
+        "$post-id": null,
+      }
+    },
+    "flag-post": {
+      "url": "/posts/:post-id/category/code",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#post",
+      "method": "PUT",
+      "params": {
+        "$post-id": null,
+      }
+    },
+    "remove-flag-post": {
+      "url": "/posts/:post-id",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#post",
+      "method": "DELETE",
+      "params": {
+        "$post-id": null,
+      }
+    },
+    "get-comment": {
+      "url": "/comments/:comment-id",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#comments",
+      "method": "DELETE",
+      "params": {
+        "$comment-id": null,
+        "$url-field-selector": null
+      }
+    },
+    "post-comment": {
+      "url": "/post/:post-id/comments",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#comments",
+      "method": "POST",
+      "params": {
+        "$post-id": null,
+        "$comment": null
+      }
+    },
+    "delete-comment": {
+      "url": "/comments/:comment-id",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#comments",
+      "method": "DELETE",
+      "params": {
+        "$comment-id": null        
+      }
+    },
     "get-from-suggestions": {
       "url": "/people/~/suggestions/groups/",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#suggestgroups",
       "method": "GET",
       "params": {
         "$group-id": null
@@ -396,18 +440,12 @@
     },
     "remove-suggestions": {
       "url": "/people/~/suggestions/groups/:id",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#suggestgroups",
       "method": "DELETE",
       "params": {
         "$id": null
       }
-    },
-    "remove": {
-      "url": "/people/~/group-memberships/:group-id",
-      "method": "DELETE",
-      "params": {
-        "$group-id": null
-      }
-    }    
+    }  
   },
   "company": {
     "all": {
