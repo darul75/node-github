@@ -1,12 +1,3 @@
-/*
- * Copyright 2012 Cloud9 IDE, Inc.
- *
- * This product includes software developed by
- * Cloud9 IDE, Inc (http://c9.io).
- *
- * Author: Mike de Boer <info@mikedeboer.nl>
- */
-
 "use strict";
 
 var Assert = require("assert");
@@ -26,93 +17,95 @@ describe("[people]", function() {
         });
     });
 
-    it("should successfully execute GET /people/~ (getCurrent)",  function(next) {
-        client.people.getCurrent(
-            {
+it("should successfully execute GET /people/~ (getCurrent)",  function(next) {
+    client.people.getCurrent(
+        {
+                url-field-selector: "String",
+                secure-urls: "Boolean"
+            },
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
+
+it("should successfully execute GET /people/ (getMember)",  function(next) {
+    client.people.getMember(
+        {
+                id: "String",
                 url-field-selector: "String"
             },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /people/ (getMember)",  function(next) {
-        client.people.getMember(
-            {
-                id: "String"
-            },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
-
-    it("should successfully execute GET /people/ (getMemberPublic)",  function(next) {
-        client.people.getMemberPublic(
-            {
+it("should successfully execute GET /people/ (getPublic)",  function(next) {
+    client.people.getPublic(
+        {
                 url: "String"
             },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /people/~/connections (getCurrentConnections)",  function(next) {
-        client.people.getCurrentConnections(
-            {
+it("should successfully execute GET /people/~/connections (getCurrentConnections)",  function(next) {
+    client.people.getCurrentConnections(
+        {
                 start: "Number",
                 count: "Number",
                 modified: "Boolean",
                 modified-since: "Date",
                 url-field-selector: "String"
             },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /people/:id/connections (getMemberConnections)",  function(next) {
-        client.people.getMemberConnections(
-            {
+it("should successfully execute GET /people/:id/connections (getMemberConnections)",  function(next) {
+    client.people.getMemberConnections(
+        {
                 id: "String",
                 start: "Number",
                 count: "Number",
                 modified: "Boolean",
                 modified-since: "Date"
             },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 
-    it("should successfully execute GET /people/ (getMemberPublicConnections)",  function(next) {
-        client.people.getMemberPublicConnections(
-            {
+it("should successfully execute GET /people/ (getMemberPublicConnections)",  function(next) {
+    client.people.getMemberPublicConnections(
+        {
                 url: "String",
                 start: "Number",
                 count: "Number",
                 modified: "Boolean",
                 modified-since: "Date"
             },
-            function(err, res) {
-                Assert.equal(err, null);
-                // other assertions go here
-                next();
-            }
-        );
-    });
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
 });

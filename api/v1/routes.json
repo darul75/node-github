@@ -96,6 +96,20 @@
         "invalidmsg": "",
         "description": ""
       },
+      "post-id": {
+        "type": "String",
+        "required": true,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
+      },
+       "comment-id": {
+        "type": "String",
+        "required": true,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
+      },
       "universal-name": {
         "type": "String",
         "required": true,
@@ -384,6 +398,41 @@
         "description": ""  
       },
       "job-title": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "type": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "scope": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "show-hidden-members": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "before": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "after": {
         "type": "String",
         "required": false,
         "validation": "",
@@ -1026,5 +1075,119 @@
         "$url-field-selector": null
       }
     }
-
+  },
+  "share": {
+    "add": {            
+      "url": "/people/~/shares",
+      "doc-url": "https://developer.linkedin.com/documents/share-api",
+      "method": "POST",
+      "params": {
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        }
+      }
+    },
+    "get-networks-updates": {            
+      "url": "/people/~/network/updates",
+      "doc-url": "https://developer.linkedin.com/documents/get-network-updates-and-statistics-api",
+      "method": "GET",
+      "params": {
+        "$scope": null,
+        "$type": null,
+        "$start": null,
+        "$count": null,
+        "$after": null,
+        "$before": null,
+        "$show-hidden-members": null,
+        "$url-field-selector": null
+      }
+    },
+    "get-networks-stats": {            
+      "url": "/people/~/network/network-stats",
+      "doc-url": "https://developer.linkedin.com/documents/get-network-updates-and-statistics-api",
+      "method": "GET",
+      "params": {        
+      }
+    },
+    "get-networks-updates-comments": {
+      "url": "/people/~/network/updates/key=:update-key/update-comments",
+      "doc-url": "https://developer.linkedin.com/documents/commenting-reading-comments-and-likes-network-updates",
+      "method": "GET",
+      "params": {
+        "$update-key": null        
+      }
+    },
+    "get-networks-updates-like": {
+      "url": "/people/~/network/updates/key=:update-key/likes",
+      "doc-url": "https://developer.linkedin.com/documents/commenting-reading-comments-and-likes-network-updates",
+      "method": "GET",
+      "params": {
+        "$update-key": null
+      }
+    },
+    "add-share-comment": {
+      "url": "/people/~/network/updates/key=:update-key/update-comments",
+      "doc-url": "https://developer.linkedin.com/documents/commenting-and-liking-company-share",
+      "method": "POST",
+      "params": {
+        "$update-key": null,
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        }
+      }
+    },
+    "like-share-comment": {
+      "url": "/people/~/network/updates/key=:update-key/is-liked",
+      "doc-url": "https://developer.linkedin.com/documents/commenting-and-liking-company-share",
+      "method": "PUT",
+      "params": {
+        "$update-key": null,
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        }
+      }
+    },
+    "post-network-update": {
+      "url": "/people/~/person-activities",
+      "doc-url": "https://developer.linkedin.com/documents/post-network-update",
+      "method": "PUT",
+      "params": {        
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        }
+      }
+    }
+  },
+  "communications": {
+    "send-invitation": {            
+      "url": "/people/~/mailbox",
+      "doc-url": "https://developer.linkedin.com/documents/invitation-api",
+      "method": "POST",
+      "params": {
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        }
+      }
+    }
+  }
 }

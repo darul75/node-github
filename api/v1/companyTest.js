@@ -33,8 +33,8 @@ it("should successfully execute GET /companies (all)",  function(next) {
     );
 });
 
-it("should successfully execute GET /companies/:company-id (one)",  function(next) {
-    client.company.one(
+it("should successfully execute GET /companies/:company-id (get)",  function(next) {
+    client.company.get(
         {
                 company-id: "String"
             },
@@ -46,8 +46,8 @@ it("should successfully execute GET /companies/:company-id (one)",  function(nex
     );
 });
 
-it("should successfully execute GET /companies/ (oneByUniversalName)",  function(next) {
-    client.company.oneByUniversalName(
+it("should successfully execute GET /companies/ (getByUniversalName)",  function(next) {
+    client.company.getByUniversalName(
         {
                 universal-name: "String"
             },
@@ -59,8 +59,8 @@ it("should successfully execute GET /companies/ (oneByUniversalName)",  function
     );
 });
 
-it("should successfully execute GET /companies (oneByEmailDomain)",  function(next) {
-    client.company.oneByEmailDomain(
+it("should successfully execute GET /companies (getByEmailDomain)",  function(next) {
+    client.company.getByEmailDomain(
         {
                 email-domain: "String"
             },
@@ -72,8 +72,8 @@ it("should successfully execute GET /companies (oneByEmailDomain)",  function(ne
     );
 });
 
-it("should successfully execute GET /companies/:company-id/updates (oneUpdate)",  function(next) {
-    client.company.oneUpdate(
+it("should successfully execute GET /companies/:company-id/updates (getUpdate)",  function(next) {
+    client.company.getUpdate(
         {
                 company-id: "String",
                 event-type: "String",
@@ -88,8 +88,8 @@ it("should successfully execute GET /companies/:company-id/updates (oneUpdate)",
     );
 });
 
-it("should successfully execute GET /companies/:company-id/updates/key=:company-update-key/update-comments (oneUpdateComments)",  function(next) {
-    client.company.oneUpdateComments(
+it("should successfully execute GET /companies/:company-id/updates/key=:company-update-key/update-comments (getUpdateComments)",  function(next) {
+    client.company.getUpdateComments(
         {
                 company-id: "String",
                 company-update-key: "String",
@@ -103,8 +103,8 @@ it("should successfully execute GET /companies/:company-id/updates/key=:company-
     );
 });
 
-it("should successfully execute GET /companies/:company-id/updates/key=:company-update-key/likes (oneUpdateCommentsLike)",  function(next) {
-    client.company.oneUpdateCommentsLike(
+it("should successfully execute GET /companies/:company-id/updates/key=:company-update-key/likes (getUpdateCommentsLike)",  function(next) {
+    client.company.getUpdateCommentsLike(
         {
                 company-id: "String",
                 company-update-key: "String",
@@ -118,13 +118,11 @@ it("should successfully execute GET /companies/:company-id/updates/key=:company-
     );
 });
 
-it("should successfully execute POST /companies/:company-id/shares (oneShares)",  function(next) {
-    client.company.oneShares(
+it("should successfully execute POST /companies/:company-id/shares (addShares)",  function(next) {
+    client.company.addShares(
         {
                 company-id: "String",
-                comment: "String",
-                visibility: "String",
-                content: "Json"
+                data: "Json"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -134,8 +132,8 @@ it("should successfully execute POST /companies/:company-id/shares (oneShares)",
     );
 });
 
-it("should successfully execute GET /companies/:company-id/is-company-share-enabled (oneShareEnabled)",  function(next) {
-    client.company.oneShareEnabled(
+it("should successfully execute GET /companies/:company-id/is-company-share-enabled (getShareEnabled)",  function(next) {
+    client.company.getShareEnabled(
         {
                 company-id: "String"
             },
@@ -147,10 +145,137 @@ it("should successfully execute GET /companies/:company-id/is-company-share-enab
     );
 });
 
-it("should successfully execute GET /companies/:company-id/relation-to-viewer/is-company-share-enabled (currentShareEnabled)",  function(next) {
-    client.company.currentShareEnabled(
+it("should successfully execute GET /companies/:company-id/relation-to-viewer/is-company-share-enabled (getCurrentShareEnabled)",  function(next) {
+    client.company.getCurrentShareEnabled(
         {
                 company-id: "String"
+            },
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
+
+it("should successfully execute GET /companies/:company-id/historical-follow-statistics (getHistoricalFollowersStatistics)",  function(next) {
+    client.company.getHistoricalFollowersStatistics(
+        {
+                company-id: "String",
+                start-timestamp: "Number",
+                end-timestamp: "Number",
+                time-granularity: "String"
+            },
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
+
+it("should successfully execute GET /companies/:company-id/historical-status-update-statistics (getHistoricalStatusUpdate)",  function(next) {
+    client.company.getHistoricalStatusUpdate(
+        {
+                company-id: "String",
+                start-timestamp: "Number",
+                end-timestamp: "Number",
+                time-granularity: "String",
+                update-key: "String",
+                url-field-selector: "String"
+            },
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
+
+it("should successfully execute GET /companies/:company-id/company-statistics (getStatistics)",  function(next) {
+    client.company.getStatistics(
+        {
+                company-id: "String"
+            },
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
+
+it("should successfully execute GET /companies/:company-id/num-followers (getNumFollowers)",  function(next) {
+    client.company.getNumFollowers(
+        {
+                seniorities: "String",
+                geos: "String",
+                companySizes: "String",
+                jobFunc: "String",
+                industries: "String"
+            },
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
+
+it("should successfully execute POST /people/~/network/updates/key=:update-key/update-comments (addShareComment)",  function(next) {
+    client.company.addShareComment(
+        {
+                update-key: "String",
+                data: "Json"
+            },
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
+
+it("should successfully execute PUT /people/~/network/updates/key=:update-key/is-liked (likeShareComment)",  function(next) {
+    client.company.likeShareComment(
+        {
+                update-key: "String",
+                data: "Json"
+            },
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
+
+it("should successfully execute PUT /companies/:company-id/updates/key=:update-key/update-comments-as-company/ (addUpdateComment)",  function(next) {
+    client.company.addUpdateComment(
+        {
+                update-key: "String",
+                company-id: "String",
+                data: "Json"
+            },
+        function(err, res) {
+            Assert.equal(err, null);
+            // other assertions go here
+            next();
+        }
+    );
+});
+
+it("should successfully execute GET /company-search (search)",  function(next) {
+    client.company.search(
+        {
+                keywords: "String",
+                hq-only: "String",
+                facet: "String",
+                facets: "String",
+                start: "Number",
+                count: "Number",
+                sort: "String",
+                url-field-selector: "String"
             },
         function(err, res) {
             Assert.equal(err, null);
