@@ -177,7 +177,7 @@ app.get('/people', function (req, res) {
   };
 
   var groupsCurrentMembershipSettings = function(callback) {
-    github.groups.getMembershipsDetails({
+    github.groups.getMembershipDetail({
       "group-id": "12435",          
       "url-field-selector": ":(show-group-logo-in-profile,email-digest-frequency,email-announcements-from-managers,allow-messages-from-members,email-for-every-new-post)"
     }, function(err, result) {
@@ -189,7 +189,7 @@ app.get('/people', function (req, res) {
   };
 
   var groupsOne = function(callback) {
-    github.groups.getDetails({
+    github.groups.getDetail({
       "group-id": "12435",
       "url-field-selector": ":(id,name,site-group-url,posts:(id,summary,creator))"      
     }, function(err, result) {
@@ -200,16 +200,134 @@ app.get('/people', function (req, res) {
     });
   };
 
+  var updateOne = function(callback) {
+    github.groups.updateMembership({
+      "group-id": "12435",
+      "data": {
+        "membership-state": {
+          "code": "member"
+        }
+      }
+    }, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.groups.one';            
+      callback(null, result);
+    });
+  };
+
+  var updateOneFull = function(callback) {
+    github.groups.updateMembershipFull({
+      "group-id": "12435",
+      "data": {
+        "group": {
+          "id": 12345
+        },        
+        "show-group-logo-in-profile": true,
+        "email-digest-frequency": {
+          "code": "daily"
+        },
+        "contact-email": "darul",
+        "email-announcements-from-managers": true,
+        "allow-messages-from-members": true,
+        "email-for-every-new-post": true,
+        "membership-state": {
+          "code": "member"
+        },
+        "email-digest-frequency": {
+          "code" :"none"
+        }
+      }
+    }, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.groups.one';            
+      callback(null, result);
+    });
+  };
+
+  var deleteOne = function(callback) {
+    github.groups.remove({
+      "group-id": "12435"      
+    }, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.groups.one';            
+      callback(null, result);
+    });
+  };
+
+  var getPosts = function(callback) {
+    github.groups.getPosts({
+      "group-id": "12435"      
+    }, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.groups.one';            
+      callback(null, result);
+    });
+  };
+
+   var getMembershipPosts = function(callback) {
+    github.groups.getMembershipPosts({
+      "group-id": "12435"      
+    }, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.groups.one';            
+      callback(null, result);
+    });
+  };
+
+   var getSuggestionPosts = function(callback) {
+    github.groups.getSuggestionPosts({
+      "group-id": "12435"      
+    }, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.groups.one';            
+      callback(null, result);
+    });
+  };
+
+  var addPost = function(callback) {
+    github.groups.addPost({
+      "group-id": "12435",
+      "data": {
+        "title": "test",
+        "summary": "summary",
+        "content": {
+          "submitted-url": "http",
+          "submitted-image-url": "http",
+          "title": "ti",
+          "description": "des"
+        }
+      }
+    }, function(err, result) {
+      if (err)
+        result = {"error" : err};
+      result['_NAME'] = 'github.groups.one';            
+      callback(null, result);
+    });
+  };
+
   // use github API            
-  q.defer(ignoreError, peopleCurrent);
-  q.defer(ignoreError, peopleMemberById);
-  q.defer(ignoreError, peopleMemberByUrl);
-  q.defer(ignoreError, peopleCurrentConnections);  
-  q.defer(ignoreError, peopleMemberConnectionsById);
-  q.defer(ignoreError, peopleMemberConnectionsByUrl);
-  q.defer(ignoreError, groupsCurrentMembership);
-  q.defer(ignoreError, groupsCurrentMembershipSettings);  
-  q.defer(ignoreError, groupsOne);
+  // q.defer(ignoreError, peopleCurrent);
+  // q.defer(ignoreError, peopleMemberById);
+  // q.defer(ignoreError, peopleMemberByUrl);
+  // q.defer(ignoreError, peopleCurrentConnections);  
+  // q.defer(ignoreError, peopleMemberConnectionsById);
+  // q.defer(ignoreError, peopleMemberConnectionsByUrl);
+  // q.defer(ignoreError, groupsCurrentMembership);
+  // q.defer(ignoreError, groupsCurrentMembershipSettings);  
+  // q.defer(ignoreError, groupsOne);
+  // q.defer(ignoreError, updateOne);
+  // q.defer(ignoreError, updateOneFull);
+  // q.defer(ignoreError, deleteOne);
+  q.defer(ignoreError, getPosts);
+  q.defer(ignoreError, getMembershipPosts);
+  q.defer(ignoreError, getSuggestionPosts);
+  q.defer(ignoreError, addPost);
   
   // q.defer(github.groups.getMemberships, {});  
   q.awaitAll(function(error, results) {     
@@ -241,7 +359,7 @@ app.get('/company', function (req, res) {
   };
 
   var companyOneAndFields = function(callback) {
-    github.company.one({
+    github.company.get({
       'company-id': 1337,
       'url-field-selector': ':(id,name)'
     }, function(err, result) {
@@ -253,7 +371,7 @@ app.get('/company', function (req, res) {
   };
 
   var companyOne = function(callback) {
-    github.company.one({"company-id": 162479}, function(err, result) {
+    github.company.get({"company-id": 162479}, function(err, result) {
       if (err)
         result = {"error" : err};
       result['_NAME'] = 'github.company.one';
@@ -262,7 +380,7 @@ app.get('/company', function (req, res) {
   };
 
   var companyUniversalName = function(callback) {
-    github.company.oneByUniversalName({"universal-name": 'linkedin'}, function(err, result) {
+    github.company.getByUniversalName({"universal-name": 'linkedin'}, function(err, result) {
       if (err)
         result = {"error" : err};
       result['_NAME'] = 'github.company.oneByUniversalName';
@@ -271,7 +389,7 @@ app.get('/company', function (req, res) {
   };
 
   var companyEmailDomain = function(callback) {
-    github.company.oneByEmailDomain({"email-domain": 'linkedin.com'}, function(err, result) {
+    github.company.getByEmailDomain({"email-domain": 'linkedin.com'}, function(err, result) {
       if (err)
         result = {"error" : err};
       result['_NAME'] = 'github.company.companyEmailDomain';
@@ -298,7 +416,7 @@ app.get('/company', function (req, res) {
   };
 
   var companyOneUpdate = function(callback) {
-    github.company.oneUpdate({"company-id": 162479}, function(err, result) {
+    github.company.getUpdate({"company-id": 162479}, function(err, result) {
       if (err)
         result = {"error" : err};
       result['_NAME'] = 'github.company.oneUpdate';
@@ -307,7 +425,7 @@ app.get('/company', function (req, res) {
   };
 
   var companyOneUpdatePagination = function(callback) {
-    github.company.oneUpdate({"company-id": 162479, "start":0, "count":5}, function(err, result) {
+    github.company.getUpdate({"company-id": 162479, "start":0, "count":5}, function(err, result) {
       if (err)
         result = {"error" : err};
       result['_NAME'] = 'github.company.companyOneUpdatePagination';
@@ -316,7 +434,7 @@ app.get('/company', function (req, res) {
   };
 
   var companyOneUpdateEventType = function(callback) {
-    github.company.oneUpdate({"company-id": 162479, 'event-type': 'status-update'}, function(err, result) {
+    github.company.getUpdate({"company-id": 162479, 'event-type': 'status-update'}, function(err, result) {
       if (err)
         result = {"error" : err};
       result['_NAME'] = 'github.company.oneUpdateEventType';
@@ -325,7 +443,7 @@ app.get('/company', function (req, res) {
   };
 
   var companyOneUpdateComments = function(callback) {
-    github.company.oneUpdateComments({"company-id": 162479, 
+    github.company.getUpdateComments({"company-id": 162479, 
       'company-update-key': 'UPDATE-c162479-5953413562058702849',
       'event-type': 'CMPY'
     }, function(err, result) {

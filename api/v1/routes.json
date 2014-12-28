@@ -68,6 +68,20 @@
         "invalidmsg": "",
         "description": ""
       },
+      "job-id": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
+      },
+      "partner-job-id": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
+      },      
       "person-id": {
         "type": "String",
         "required": true,
@@ -114,6 +128,27 @@
         "type": "Number",
         "required": false,
         "validation": "^[0-9]+$",
+        "invalidmsg": "",
+        "description": ""
+      },
+      "start-timestamp": {
+        "type": "Number",
+        "required": false,
+        "validation": "^[0-9]+$",
+        "invalidmsg": "",
+        "description": ""
+      },
+      "end-timestamp": {
+        "type": "Number",
+        "required": false,
+        "validation": "^[0-9]+$",
+        "invalidmsg": "",
+        "description": ""
+      },
+      "time-granularity": {
+        "type": "String",
+        "required": false,
+        "validation": "",
         "invalidmsg": "",
         "description": ""
       },
@@ -193,6 +228,167 @@
         "validation": "",
         "invalidmsg": "",
         "description": ""
+      },
+      "update-key": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""
+      },
+      "seniorities": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "geos": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "companySizes": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "jobFunc": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "industries": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "keywords": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "first-name": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "last-name": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "company-name": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "current-company": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "title": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "current-title": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "school-name": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "current-school": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "country-code": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "postal-code": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "distance": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "facet": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "facets": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "sort": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "hq-only": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
+      },
+      "job-title": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": ""  
       }
     }
   },
@@ -249,15 +445,26 @@
         "$keywords": null,
         "$first-name": null,
         "$last-name": null,
-        "$school-name": null,
-        "$start": null,
-        "$count": null,
-        "$sort":null
+        "$company-name": null,
+        "$current-company": null,
+        "$title": null,
+        "$current-title": null,
+        "$school-name":null,
+        "$current-school":null,
+        "$country-code":null,
+        "$postal-code":null,
+        "$distance":null,
+        "$facet":null,
+        "$facets":null,
+        "$start":null,
+        "$count":null,
+        "$sort":null,
+        "$url-field-selector": null
       }
     }    
   },
   "groups": {
-    "get-details": {
+    "get-detail": {
       "url": "/groups/:group-id",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#profiledetails",
       "method": "GET",
@@ -266,7 +473,7 @@
         "$url-field-selector": null
       }
     },
-    "get-memberships-details": {
+    "get-membership-detail": {
       "url": "/people/~/group-memberships/:group-id",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#membergroups",
       "method": "GET",
@@ -284,6 +491,35 @@
         "$start": null,
         "$count": null,
         "$url-field-selector": null
+      }
+    },
+    "update-membership": {
+      "url": "/people/~/group-memberships/:group-id",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#membergroups",
+      "method": "PUT",
+      "params": {
+        "$group-id": null,
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": "See https://developer.linkedin.com/documents/groups-fields"
+        }
+      }
+    },
+    "update-membership-full": {
+      "url": "/people/~/group-memberships/",
+      "doc-url": "https://developer.linkedin.com/documents/groups-api#membergroups",
+      "method": "POST",
+      "params": {        
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": "See https://developer.linkedin.com/documents/groups-fields"
+        }
       }
     },
     "join": {
@@ -319,7 +555,7 @@
         "$url-field-selector": null
       }
     },
-   "get-memberships-posts": {
+   "get-membership-posts": {
       "url": "/people/~/group-memberships/:group-id/posts",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#groupposts",
       "method": "GET",
@@ -332,7 +568,7 @@
         "$url-field-selector": null
       }
     },
-    "get-suggestions-posts": {
+   "get-suggestion-posts": {
       "url": "/people/~/suggestions/groups/:group-id/posts",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#groupposts",
       "method": "GET",
@@ -346,12 +582,21 @@
       }
     },
    "add-post": {
-      "url": "/people/~/groups/:group-id/posts",
+      "url": "/groups/:group-id/posts",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#create",
       "method": "POST",
-      "params": {}
+      "params": {
+        "$group-id": null,
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": "See https://developer.linkedin.com/documents/groups-fields"
+        }
+      }
     },    
-    "get-post": {
+   "get-post": {
       "url": "/posts/:post-id",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#post",
       "method": "GET",
@@ -360,7 +605,7 @@
         "$url-field-selector": null
       }
     },
-    "get-posts-comments": {
+   "get-posts-comments": {
       "url": "/posts/:post-id/comments",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#post",
       "method": "GET",
@@ -372,57 +617,84 @@
         "$url-field-selector": null
       }
     },
-    "like-post": {
+   "like-post": {
       "url": "/posts/:post-id/relation-to-viewer/is-liked",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#post",
       "method": "PUT",
       "params": {
         "$post-id": null,
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        }
       }
     },
-    "follow-post": {
+   "follow-post": {
       "url": "/posts/:post-id/relation-to-viewer/is-following",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#post",
       "method": "PUT",
       "params": {
         "$post-id": null,
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        }
       }
     },
-    "flag-post": {
+   "flag-post": {
       "url": "/posts/:post-id/category/code",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#post",
       "method": "PUT",
       "params": {
         "$post-id": null,
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": "See https://developer.linkedin.com/documents/groups-fields"
+        }
       }
     },
-    "remove-flag-post": {
+   "remove-flag-post": {
       "url": "/posts/:post-id",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#post",
       "method": "DELETE",
       "params": {
-        "$post-id": null,
+        "$post-id": null
       }
     },
-    "get-comment": {
+   "get-comment": {
       "url": "/comments/:comment-id",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#comments",
-      "method": "DELETE",
+      "method": "GET",
       "params": {
         "$comment-id": null,
         "$url-field-selector": null
       }
     },
-    "post-comment": {
+   "post-comment": {
       "url": "/post/:post-id/comments",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#comments",
       "method": "POST",
       "params": {
         "$post-id": null,
-        "$comment": null
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": "See https://developer.linkedin.com/documents/groups-fields"
+        }
       }
     },
-    "delete-comment": {
+   "delete-comment": {
       "url": "/comments/:comment-id",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#comments",
       "method": "DELETE",
@@ -430,15 +702,14 @@
         "$comment-id": null        
       }
     },
-    "get-from-suggestions": {
+   "get-from-suggestions": {
       "url": "/people/~/suggestions/groups/",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#suggestgroups",
       "method": "GET",
-      "params": {
-        "$group-id": null
+      "params": {        
       }
     },
-    "remove-suggestions": {
+   "remove-suggestions": {
       "url": "/people/~/suggestions/groups/:id",
       "doc-url": "https://developer.linkedin.com/documents/groups-api#suggestgroups",
       "method": "DELETE",
@@ -450,6 +721,7 @@
   "company": {
     "all": {
       "url": "/companies",
+      "doc-url": "https://developer.linkedin.com/documents/company-lookup-api-and-fields",
       "method": "GET",
       "params": {
         "$url-field-selector": null,
@@ -458,48 +730,54 @@
         "$count": null
       }
     },
-    "one": {
-        "url": "/companies/:company-id",
-        "method": "GET",
-        "params": {
-          "$company-id": null
-        }
+    "get": {
+      "url": "/companies/:company-id",
+      "doc-url": "https://developer.linkedin.com/documents/company-lookup-api-and-fields",
+      "method": "GET",
+      "params": {
+        "$company-id": null
+      }
     },
-    "one-by-universal-name": {
-        "url": "/companies/",
-        "method": "GET",
-        "params": {
-          "$universal-name": null
-        }
+    "get-by-universal-name": {
+      "url": "/companies/",
+      "doc-url": "https://developer.linkedin.com/documents/company-lookup-api-and-fields",
+      "method": "GET",
+      "params": {
+        "$universal-name": null
+      }
     },
-    "one-by-email-domain": {
+    "get-by-email-domain": {
       "url": "/companies",
+      "doc-url": "https://developer.linkedin.com/documents/company-lookup-api-and-fields",
       "method": "GET",
       "params": {
         "$email-domain": null
       }
     },
-    "one-update": {
-        "url": "/companies/:company-id/updates",
-        "method": "GET",
-        "params": {
-          "$company-id": null,
-          "$event-type": null,
-          "$start": null,
-          "$count": null
-        }
+    "get-update": {
+      "url": "/companies/:company-id/updates",
+      "doc-url": "https://developer.linkedin.com/reading-company-shares",
+      "method": "GET",
+      "params": {
+        "$company-id": null,
+        "$event-type": null,
+        "$start": null,
+        "$count": null
+      }
     },
-    "one-update-comments": {
-        "url": "/companies/:company-id/updates/key=:company-update-key/update-comments",
-        "method": "GET",
-        "params": {
-          "$company-id": null,
-          "$company-update-key": null,
-          "$event-type": null
-        }
+    "get-update-comments": {
+      "url": "/companies/:company-id/updates/key=:company-update-key/update-comments",
+      "doc-url": "https://developer.linkedin.com/reading-company-shares",
+      "method": "GET",
+      "params": {
+        "$company-id": null,
+        "$company-update-key": null,
+        "$event-type": null
+      }
     },
-    "one-update-comments-like": {
+    "get-update-comments-like": {
       "url": "/companies/:company-id/updates/key=:company-update-key/likes",
+      "doc-url": "https://developer.linkedin.com/reading-company-shares",
       "method": "GET",
       "params": {
         "$company-id": null,
@@ -507,27 +785,212 @@
         "$event-type": null          
       }
     },
-    "one-shares": {
+    "add-shares": {
       "url": "/companies/:company-id/shares",
+      "doc-url": "https://developer.linkedin.com/documents/targeting-company-shares",
       "method": "POST",
       "params": {
         "$company-id": null,
-        "comment": {
-          "type": "String",
-          "required": false,
-          "allow-empty": true,
+        "data": {
+          "type": "Json",
+          "required": true,
           "validation": "",
           "invalidmsg": "",
-          "description": ""
-        },
-        "visibility": {
-          "type": "String",
+          "description": "See https://developer.linkedin.com/documents/groups-fields"
+        }
+      }
+    },
+    "get-share-enabled": {
+      "url": "/companies/:company-id/is-company-share-enabled",
+      "doc-url": "https://developer.linkedin.com/creating-company-shares",
+      "method": "GET",
+      "params": {
+        "$company-id": null
+      }
+    },
+    "get-current-share-enabled": {
+      "url": "/companies/:company-id/relation-to-viewer/is-company-share-enabled",
+      "doc-url": "https://developer.linkedin.com/creating-company-shares",
+      "method": "GET",
+      "params": {
+        "$company-id": null
+      }
+    },
+    "get-historical-followers-statistics": {
+      "url": "/companies/:company-id/historical-follow-statistics",
+      "doc-url": "https://developer.linkedin.com/historical-company-statistics",
+      "method": "GET",
+      "params": {
+        "$company-id": null,
+        "$start-timestamp": null,
+        "$end-timestamp": null,
+        "$time-granularity": null
+      }
+    },
+    "get-historical-status-update": {
+      "url": "/companies/:company-id/historical-status-update-statistics",
+      "doc-url": "https://developer.linkedin.com/historical-company-statistics",
+      "method": "GET",
+      "params": {
+        "$company-id": null,
+        "$start-timestamp": null,
+        "$end-timestamp": null,
+        "$time-granularity": null,
+        "$update-key": null,
+        "$url-field-selector": null
+      }
+    },
+    "get-statistics": {
+      "url": "/companies/:company-id/company-statistics",
+      "doc-url": "https://developer.linkedin.com/company-statistics",
+      "method": "GET",
+      "params": {
+        "$company-id": null        
+      }
+    },
+    "get-num-followers": {
+      "url": "/companies/:company-id/num-followers",
+      "doc-url": "https://developer.linkedin.com/documents/targeting-company-shares",
+      "method": "GET",
+      "params": {
+        "$seniorities": null,
+        "$geos": null,
+        "$companySizes": null,
+        "$jobFunc": null,
+        "$industries": null
+      }
+    },
+    "add-share-comment": {
+      "url": "/people/~/network/updates/key=:update-key/update-comments",
+      "doc-url": "https://developer.linkedin.com/documents/commenting-and-liking-company-share",
+      "method": "POST",
+      "params": {
+        "$update-key": null,
+        "data": {
+          "type": "Json",
           "required": true,
           "validation": "",
           "invalidmsg": "",
           "description": ""
-        },
-        "content": {
+        }
+      }
+    },
+    "like-share-comment": {
+      "url": "/people/~/network/updates/key=:update-key/is-liked",
+      "doc-url": "https://developer.linkedin.com/documents/commenting-and-liking-company-share",
+      "method": "PUT",
+      "params": {
+        "$update-key": null,
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        }
+      }
+    },
+    "add-update-comment": {
+      "url": "/companies/:company-id/updates/key=:update-key/update-comments-as-company/",
+      "doc-url": "https://developer.linkedin.com/documents/commenting-and-liking-company-share",
+      "method": "PUT",
+      "params": {
+        "$update-key": null,
+        "$company-id": null,
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        }
+      }
+    },
+    "search": {
+      "url": "/company-search",
+      "doc-url": "https://developer.linkedin.com/documents/company-search",
+      "method": "GET",
+      "params": {
+        "$keywords": null,
+        "$hq-only": null,        
+        "$facet":null,
+        "$facets":null,
+        "$start":null,
+        "$count":null,
+        "$sort":null,
+        "$url-field-selector": null
+      }
+    }
+  },
+  "jobs": {
+    "get": {            
+      "url": "/jobs/:job-id",
+      "doc-url": "https://developer.linkedin.com/documents/job-lookup-api-and-fields",
+      "method": "GET",
+      "params": {
+        "$job-id": null,
+        "$url-field-selector": null
+      }
+    },
+    "get-current-bookmarks": {            
+      "url": "/people/~/job-bookmarks",
+      "doc-url": "https://developer.linkedin.com/documents/job-bookmarks-and-suggestions",
+      "method": "GET",
+      "params": {
+        "$url-field-selector": null
+      }
+    },
+    "bookmark": {            
+      "url": "/people/~/job-bookmarks",
+      "doc-url": "https://developer.linkedin.com/documents/job-bookmarks-and-suggestions",
+      "method": "POST",
+      "params": {
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        }       
+      }
+    },
+    "remove-bookmark": {            
+      "url": "/people/~/job-bookmarks/:job-id",
+      "doc-url": "https://developer.linkedin.com/documents/job-bookmarks-and-suggestions",
+      "method": "DELETE",
+      "params": {
+        "$job-id": null        
+      }
+    },
+    "get-current-suggestions": {            
+      "url": "people/~/suggestions/job-suggestions:(jobs)",
+      "doc-url": "https://developer.linkedin.com/documents/job-bookmarks-and-suggestions",
+      "method": "GET",
+      "params": {
+        "$job-id": null        
+      }
+    },
+    "add": {            
+      "url": "/jobs",
+      "doc-url": "https://developer.linkedin.com/documents/posting-job",
+      "method": "POST",
+      "params": {
+        "data": {
+          "type": "Json",
+          "required": true,
+          "validation": "",
+          "invalidmsg": "",
+          "description": ""
+        }       
+      }
+    },
+    "update": {            
+      "url": "/jobs",
+      "doc-url": "https://developer.linkedin.com/documents/editing-job",
+      "method": "PUT",
+      "params": {
+        "$partner-job-id": null,
+        "data": {
           "type": "Json",
           "required": false,
           "validation": "",
@@ -536,19 +999,32 @@
         }
       }
     },
-    "one-share-enabled": {
-      "url": "/companies/:company-id/is-company-share-enabled",
-      "method": "GET",
+    "remove": {            
+      "url": "/jobs",
+      "doc-url": "https://developer.linkedin.com/documents/closing-job",
+      "method": "DELETE",
       "params": {
-        "$company-id": null
+        "$partner-job-id": null        
       }
     },
-    "current-share-enabled": {
-      "url": "/companies/:company-id/relation-to-viewer/is-company-share-enabled",
+    "search": {
+      "url": "/job-search",
+      "doc-url": "https://developer.linkedin.com/documents/job-search-api",
       "method": "GET",
       "params": {
-        "$company-id": null
+        "$keywords": null,
+        "$company-name": null,
+        "$job-title": null,          
+        "$country-code": null,
+        "$postal-code": null,
+        "$distance": null,
+        "$facet":null,        
+        "$facets":null,
+        "$start":null,
+        "$count":null,
+        "$sort":null,
+        "$url-field-selector": null
       }
     }
-  }
+
 }
