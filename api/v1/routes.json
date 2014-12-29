@@ -1,4 +1,4 @@
-  {
+{
   "defines": {
     "constants": {
       "name": "Linked",
@@ -32,14 +32,7 @@
     "profile-request-headers": [
       "Accept-Language HTTP header"
     ],
-    "params": {
-      "files": {
-        "type": "Json",
-        "required": true,
-        "validation": "",
-        "invalidmsg": "",
-        "description": "Files that make up this gist. The key of which should be a required string filename and the value another required hash with parameters: 'content'"
-      },
+    "params": {    
       "url-field-selector": {
         "type": "String",
         "required": false,
@@ -52,392 +45,378 @@
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "A unique identifier token for this member."
       },
       "idOrUrl": {
         "type": "String",
         "required": true,
         "validation": "",
         "invalidmsg": "",
-        "description": "Profile Id or public URL"
+        "description": "A unique identifier token for this member or public URL."
       },      
       "group-id": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "Default. The group ID. Read-only. The ID is assigned automatically when the group is created."
       },
       "job-id": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "The unique identifier for a job."
       },
       "partner-job-id": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
-      },      
-      "person-id": {
-        "type": "String",
-        "required": true,
-        "validation": "",
-        "invalidmsg": "",
-        "description": ""
+        "description": "Unique ID for the job created by the partner (must be unique for each job posted)."
       },
       "company-id": {
         "type": "String",
         "required": true,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "The unique internal numeric company identifier."
       },
       "post-id": {
         "type": "String",
         "required": true,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "The unique identifier for a post."
       },
-       "comment-id": {
+      "comment-id": {
         "type": "String",
         "required": true,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "The unique identifier for a comment."
       },
       "universal-name": {
         "type": "String",
         "required": true,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "Company name identifier, ex: Apple."
       },
       "email-domain": {
         "type": "String",
         "required": true,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "Company email identifier. Ex: apple.com."
       },
       "url": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": "Public profile URL"
+        "description": "Public profile URL."
       },
       "secure-urls": {
         "type": "Boolean",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": "Indicate that you want the URLs in your response to be HTTPS"
+        "description": "Indicate that you want the URLs in your response to be HTTPS."
       },
       "start": {
         "type": "Number",
         "required": false,
         "validation": "^[0-9]+$",
         "invalidmsg": "",
-        "description": ""
-      },
-      "start-timestamp": {
-        "type": "Number",
-        "required": false,
-        "validation": "^[0-9]+$",
-        "invalidmsg": "",
-        "description": ""
-      },
-      "end-timestamp": {
-        "type": "Number",
-        "required": false,
-        "validation": "^[0-9]+$",
-        "invalidmsg": "",
-        "description": ""
-      },
-      "time-granularity": {
-        "type": "String",
-        "required": false,
-        "validation": "",
-        "invalidmsg": "",
-        "description": ""
-      },
-      "end": {
-        "type": "Number",
-        "required": false,
-        "validation": "^[0-9]+$",
-        "invalidmsg": "",
-        "description": ""
+        "description": "Record index at which to start pagination."
       },
       "count": {
         "type": "Number",
         "required": false,
         "validation": "^[0-9]+$",
         "invalidmsg": "",
-        "description": ""
+        "description": "Number of records to return."
       },
+      "start-timestamp": {
+        "type": "Number",
+        "required": false,
+        "validation": "^[0-9]+$",
+        "invalidmsg": "",
+        "description": "Starting timestamp of when the stats search should begin (milliseconds since epoch)."
+      },
+      "end-timestamp": {
+        "type": "Number",
+        "required": false,
+        "validation": "^[0-9]+$",
+        "invalidmsg": "",
+        "description": "Ending timestamp of when the stats search should end (milliseconds since epoch). The current time will be used if parameter not set."
+      },
+      "time-granularity": {
+        "type": "String",
+        "required": false,
+        "validation": "",
+        "invalidmsg": "",
+        "description": "Granularity of statistics. Supported values are 'day' and 'month'."
+      },          
       "modified": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": "Values are: 'updated' or 'new'"
+        "description": "Values are: 'updated' or 'new'."
       },
       "modified-since": {
         "type": "Number",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": "In miliseconds since epoch"
+        "description": "Value as a Unix time stamp of milliseconds since epoch."
       },
       "membership-state": {
-        "type": "Array",
+        "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "The state of the caller’s membership to the specified group. Use the value member to retrieve the groups to which a user belongs."
       },
       "order": {
-        "type": "Array",
+        "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "Sort order for posts."
       },
       "role": {
-        "type": "Array",
+        "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "Filter for posts related to the caller. Valid only for group-memberships/{id}/posts resource."
       },
       "category": {
         "type": "Array",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "Category of posts."
       },
       "is-company-admin": {
         "type": "Boolean",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "Fetch a list of all companies the authenticated user is an administrator of."
       },
       "event-type": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "Any valid Company Update Type."
       },
       "company-update-key": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "Update/update-key representing a particular company update. By default, a company update will only return all comments, limiting at a max of 100."
       },
       "update-key": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""
+        "description": "Only needed if you want to fetch statistics for a specific company share."
       },
       "seniorities": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Level of seniority to target."  
       },
       "geos": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "See geographies for the valid values."  
       },
       "companySizes": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Specify the size range for the company."  
       },
       "jobFunc": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Job functions."  
       },
       "industries": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "The industry the LinkedIn member has indicated their profile belongs to (Industry Codes)."  
       },
       "keywords": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Use this field when you don't know how to more accurately map the input to a more specific parameter. (Don't forget to URL encode this data.)"  
       },
       "first-name": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "The member's first name."  
       },
       "last-name": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "The member's last name."  
       },
       "company-name": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Members who have a matching company name on their profile. company-name can be combined with the current-company parameter to specifies whether the person is or is not still working at the company."  
       },
       "current-company": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Valid values are true or false. A value of true matches members who currently work at the company specified in the company-name parameter. A value of false matches members who once worked at the company. Omitting the parameter matches members who currently or once worked the company."  
       },
       "title": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Matches members with that title on their profile. Works with the current-title parameter."  
       },
       "current-title": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Valid values are true or false. A value of true matches members whose title is currently the one specified in the title-name parameter. A value of false matches members who once had that title. Omitting the parameter matches members who currently or once had that title."  
       },
       "school-name": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Members who have a matching school name on their profile. school-name can be combined with the current-school parameter to specifies whether the person is or is not still at the school. It's often valuable to not be too specific with the school name. The same explation provided with company name applies: 'Yale' vs. 'Yale University'."  
       },
       "current-school": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Valid values are true or false. A value of true matches members who currently attend the school specified in the school-name parameter. A value of false matches members who once attended the school. Omitting the parameter matches members who currently or once attended the school."  
       },
       "country-code": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Matches members with a location in a specific country. Values are defined in by ISO 3166 standard. Country codes must be in all lower case."  
       },
       "postal-code": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Matches members centered around a Postal Code. Must be combined with the country-code parameter. Not supported for all countries."  
       },
       "distance": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "The degree distance of the fetched profile from the member who fetched the profile."  
       },
       "facet": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Facet values to search over."  
       },
       "facets": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Facet buckets to return."  
       },
       "sort": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Controls the search result order."  
       },
       "hq-only": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Matching companies by the headquarters location. When this is set to "true" and a location facet is used, this restricts returned companies to only those whose headquarters resides in the specified location."  
       },
       "job-title": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Matches jobs with the same job title."  
       },
       "type": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Any valid Network Update Type from the table below. Types must be in all capital letters. To specify more than one Network Update type, add the type parameter to the resource URL for each type."  
       },
       "scope": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "self to return member's feed. Omitted to return aggregated network feed."  
       },
       "show-hidden-members": {
         "type": "String",
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": ""  
+        "description": "true or false. default is false. Whether to display updates from people the member has chosen to "hide" from their update stream."  
       },
       "before": {
-        "type": "String",
+        "type": "Number",
         "required": false,
-        "validation": "",
+        "validation": "^[0-9]+$",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Timestamp before which to retrieve updates for (Ex: 1243834824000) note: precision is milliseconds since the epoch."  
       },
       "after": {
-        "type": "String",
+        "type": "Number",
         "required": false,
-        "validation": "",
+        "validation": "^[0-9]+$",
         "invalidmsg": "",
-        "description": ""  
+        "description": "Timestamp after which to retrieve updates for (Ex: 1243834824000) note: precision is milliseconds since the epoch."  
       }
     }
   },
@@ -600,6 +579,7 @@
         "$start": null,
         "$count": null,
         "$role": null,
+        "$order": null,
         "$category": null,
         "$url-field-selector": null
       }
@@ -613,6 +593,7 @@
         "$start": null,
         "$count": null,
         "$role": null,
+        "$order": null,
         "$category": null,
         "$url-field-selector": null
       }
@@ -626,6 +607,7 @@
         "$start": null,
         "$count": null,
         "$role": null,
+        "$order": null,
         "$category": null,
         "$url-field-selector": null
       }
