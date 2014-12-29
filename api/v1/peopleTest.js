@@ -20,8 +20,8 @@ describe("[people]", function() {
 it("should successfully execute GET /people/~ (getCurrent)",  function(next) {
     client.people.getCurrent(
         {
-                url-field-selector: "String",
-                secure-urls: "Boolean"
+                "url-field-selector": "String",
+                "secure-urls": "Boolean"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -34,10 +34,10 @@ it("should successfully execute GET /people/~ (getCurrent)",  function(next) {
 it("should successfully execute GET /people/ (getMember)",  function(next) {
     client.people.getMember(
         {
-                id: "String",
-                url: "String",
-                url-field-selector: "String",
-                secure-urls: "Boolean"
+                "id": "String",
+                "url": "String",
+                "url-field-selector": "String",
+                "secure-urls": "Boolean"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -50,11 +50,11 @@ it("should successfully execute GET /people/ (getMember)",  function(next) {
 it("should successfully execute GET /people/~/connections (getCurrentConnections)",  function(next) {
     client.people.getCurrentConnections(
         {
-                start: "Number",
-                count: "Number",
-                modified: "String",
-                modified-since: "Number",
-                url-field-selector: "String"
+                "start": "Number",
+                "count": "Number",
+                "modified": "String",
+                "modified-since": "Number",
+                "url-field-selector": "String"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -67,11 +67,11 @@ it("should successfully execute GET /people/~/connections (getCurrentConnections
 it("should successfully execute GET /people/:idOrUrl/connections (getMemberConnections)",  function(next) {
     client.people.getMemberConnections(
         {
-                idOrUrl: "String",
-                start: "Number",
-                count: "Number",
-                modified: "String",
-                modified-since: "Number"
+                "idOrUrl": "String",
+                "start": "Number",
+                "count": "Number",
+                "modified": "String",
+                "modified-since": "Number"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -84,24 +84,24 @@ it("should successfully execute GET /people/:idOrUrl/connections (getMemberConne
 it("should successfully execute GET /people-search (search)",  function(next) {
     client.people.search(
         {
-                keywords: "String",
-                first-name: "String",
-                last-name: "String",
-                company-name: "String",
-                current-company: "String",
-                title: "String",
-                current-title: "String",
-                school-name: "String",
-                current-school: "String",
-                country-code: "String",
-                postal-code: "String",
-                distance: "String",
-                facet: "String",
-                facets: "String",
-                start: "Number",
-                count: "Number",
-                sort: "String",
-                url-field-selector: "String"
+                "keywords": "String",
+                "first-name": "String",
+                "last-name": "String",
+                "company-name": "String",
+                "current-company": "String",
+                "title": "String",
+                "current-title": "String",
+                "school-name": "String",
+                "current-school": "String",
+                "country-code": "String",
+                "postal-code": "String",
+                "distance": "String",
+                "facet": "String",
+                "facets": "String",
+                "start": "Number",
+                "count": "Number",
+                "sort": "String",
+                "url-field-selector": "String"
             },
         function(err, res) {
             Assert.equal(err, null);

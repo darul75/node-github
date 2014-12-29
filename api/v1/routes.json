@@ -374,7 +374,7 @@
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": "Matching companies by the headquarters location. When this is set to "true" and a location facet is used, this restricts returned companies to only those whose headquarters resides in the specified location."  
+        "description": "Matching companies by the headquarters location. When this is set to 'true' and a location facet is used, this restricts returned companies to only those whose headquarters resides in the specified location."
       },
       "job-title": {
         "type": "String",
@@ -402,7 +402,7 @@
         "required": false,
         "validation": "",
         "invalidmsg": "",
-        "description": "true or false. default is false. Whether to display updates from people the member has chosen to "hide" from their update stream."  
+        "description": "true or false. default is false. Whether to display updates from people the member has chosen to 'hide' from their update stream."  
       },
       "before": {
         "type": "Number",
@@ -416,7 +416,7 @@
         "required": false,
         "validation": "^[0-9]+$",
         "invalidmsg": "",
-        "description": "Timestamp after which to retrieve updates for (Ex: 1243834824000) note: precision is milliseconds since the epoch."  
+        "description": "Timestamp after which to retrieve updates for (Ex: 1243834824000) note: precision is milliseconds since the epoch."
       }
     }
   },

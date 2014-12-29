@@ -6,12 +6,12 @@ var queue = require("queue-async");
 var Client = require("../index");
 var OAuth2 = require("oauth").OAuth2;
 
-var github = new Client({
+var linkedin = new Client({
   version: "1",
   pathPrefix:"v1"  
 });
 
-// var github = new Client({
+// var linkedin = new Client({
 //   version: "1",
 //   pathPrefix:"v1",
 //   proxy: {
@@ -79,8 +79,8 @@ app.get(/^\/linked-callback\/?$/, function (req, res) {
 
       accessToken = access_token;
 
-      // authenticate github API
-      github.authenticate({
+      // authenticate linkedin API
+      linkedin.authenticate({
         type: "oauth",
         token: accessToken
       });
@@ -99,56 +99,56 @@ app.get('/people', function (req, res) {
   };
 
   var peopleCurrent = function(callback) {
-    github.people.getCurrent({"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions,public-profile-url)'}, function(err, result) {
+    linkedin.people.getCurrent({"url-field-selector": ':(id,first-name,last-name,industry,connections,group-memberships,educations,date-of-birth,positions,public-profile-url)'}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.people.get';
+      result['_NAME'] = 'linkedin.people.get';
       callback(null, result);
     });    
   };
 
   var peopleMemberByUrl = function(callback) {
-    github.people.getMember({"url": 'https://www.linkedin.com/pub/julien-valery/70/624/b54', 'secure-urls': true, "url-field-selector": ':(headline,first-name,last-name)'}, function(err, result) {
+    linkedin.people.getMember({"url": 'https://www.linkedin.com/pub/julien-valery/70/624/b54', 'secure-urls': true, "url-field-selector": ':(headline,first-name,last-name)'}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.people.get';
+      result['_NAME'] = 'linkedin.people.get';
       callback(null, result);
     });    
   };
 
   var peopleMemberById = function(callback) {
-    github.people.getMember({"id": '2JVl6yrion', 'secure-urls': true,"url-field-selector": ':(headline,first-name,last-name)'}, function(err, result) {
+    linkedin.people.getMember({"id": '2JVl6yrion', 'secure-urls': true,"url-field-selector": ':(headline,first-name,last-name)'}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.people.getMember';
+      result['_NAME'] = 'linkedin.people.getMember';
       callback(null, result);
     });    
   };
 
   var peopleCurrentConnections = function(callback) {
-    github.people.getCurrentConnections({"url-field-selector": ':(headline,first-name,last-name)'}, function(err, result) {
+    linkedin.people.getCurrentConnections({"url-field-selector": ':(headline,first-name,last-name)'}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.people.getCurrentConnections';
+      result['_NAME'] = 'linkedin.people.getCurrentConnections';
       callback(null, result);
     });    
   };  
 
   var peopleMemberConnectionsById = function(callback) {
-    github.people.getMemberConnections({
+    linkedin.people.getMemberConnections({
       "idOrUrl": '2JVl6yrion',
       "start": 0,
       "count": 5
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.people.peopleMemberConnectionsById';
+      result['_NAME'] = 'linkedin.people.peopleMemberConnectionsById';
       callback(null, result);
     });    
   };
 
   var peopleMemberConnectionsByUrl = function(callback) {
-    github.people.getMemberConnections({
+    linkedin.people.getMemberConnections({
       "idOrUrl": 'https://www.linkedin.com/pub/julien-valery/70/624/b54',
       "modified":"new",
       "modified-since":1267401600000,
@@ -157,13 +157,13 @@ app.get('/people', function (req, res) {
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.people.peopleMemberConnectionsByUrl';
+      result['_NAME'] = 'linkedin.people.peopleMemberConnectionsByUrl';
       callback(null, result);
     });    
   };
 
   var groupsCurrentMembership = function(callback) {
-    github.groups.getMemberships({
+    linkedin.groups.getMemberships({
       "membership-state": "owner",
       "start": 0,
       "count": 5,
@@ -171,37 +171,37 @@ app.get('/people', function (req, res) {
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.groups.getMemberships';            
+      result['_NAME'] = 'linkedin.groups.getMemberships';            
       callback(null, result);
     });
   };
 
   var groupsCurrentMembershipSettings = function(callback) {
-    github.groups.getMembershipDetail({
+    linkedin.groups.getMembershipDetail({
       "group-id": "12435",          
       "url-field-selector": ":(show-group-logo-in-profile,email-digest-frequency,email-announcements-from-managers,allow-messages-from-members,email-for-every-new-post)"
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.groups.getMemberships';            
+      result['_NAME'] = 'linkedin.groups.getMemberships';            
       callback(null, result);
     });
   };
 
   var groupsOne = function(callback) {
-    github.groups.getDetail({
+    linkedin.groups.getDetail({
       "group-id": "12435",
       "url-field-selector": ":(id,name,site-group-url,posts:(id,summary,creator))"      
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.groups.one';            
+      result['_NAME'] = 'linkedin.groups.one';            
       callback(null, result);
     });
   };
 
   var updateOne = function(callback) {
-    github.groups.updateMembership({
+    linkedin.groups.updateMembership({
       "group-id": "12435",
       "data": {
         "membership-state": {
@@ -211,13 +211,13 @@ app.get('/people', function (req, res) {
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.groups.one';            
+      result['_NAME'] = 'linkedin.groups.one';            
       callback(null, result);
     });
   };
 
   var updateOneFull = function(callback) {
-    github.groups.updateMembershipFull({
+    linkedin.groups.updateMembershipFull({
       "group-id": "12435",
       "data": {
         "group": {
@@ -241,57 +241,57 @@ app.get('/people', function (req, res) {
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.groups.one';            
+      result['_NAME'] = 'linkedin.groups.one';            
       callback(null, result);
     });
   };
 
   var deleteOne = function(callback) {
-    github.groups.remove({
+    linkedin.groups.remove({
       "group-id": "12435"      
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.groups.one';            
+      result['_NAME'] = 'linkedin.groups.one';            
       callback(null, result);
     });
   };
 
   var getPosts = function(callback) {
-    github.groups.getPosts({
+    linkedin.groups.getPosts({
       "group-id": "12435"      
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.groups.one';            
+      result['_NAME'] = 'linkedin.groups.one';            
       callback(null, result);
     });
   };
 
    var getMembershipPosts = function(callback) {
-    github.groups.getMembershipPosts({
+    linkedin.groups.getMembershipPosts({
       "group-id": "12435"      
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.groups.one';            
+      result['_NAME'] = 'linkedin.groups.one';            
       callback(null, result);
     });
   };
 
    var getSuggestionPosts = function(callback) {
-    github.groups.getSuggestionPosts({
+    linkedin.groups.getSuggestionPosts({
       "group-id": "12435"      
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.groups.one';            
+      result['_NAME'] = 'linkedin.groups.one';            
       callback(null, result);
     });
   };
 
   var addPost = function(callback) {
-    github.groups.addPost({
+    linkedin.groups.addPost({
       "group-id": "12435",
       "data": {
         "title": "test",
@@ -306,12 +306,12 @@ app.get('/people', function (req, res) {
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.groups.one';            
+      result['_NAME'] = 'linkedin.groups.one';            
       callback(null, result);
     });
   };
 
-  // use github API            
+  // use linkedin API            
   // q.defer(ignoreError, peopleCurrent);
   // q.defer(ignoreError, peopleMemberById);
   // q.defer(ignoreError, peopleMemberByUrl);
@@ -329,7 +329,7 @@ app.get('/people', function (req, res) {
   q.defer(ignoreError, getSuggestionPosts);
   q.defer(ignoreError, addPost);
   
-  // q.defer(github.groups.getMemberships, {});  
+  // q.defer(linkedin.groups.getMemberships, {});  
   q.awaitAll(function(error, results) {     
     if (error)
       res.json(error);
@@ -350,111 +350,111 @@ app.get('/company', function (req, res) {
   };
   
   var companyCurrent = function(callback) {
-    github.company.all({}, function(err, result) {
+    linkedin.company.all({}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.company.all';
+      result['_NAME'] = 'linkedin.company.all';
       callback(null, result);
     });
   };
 
   var companyOneAndFields = function(callback) {
-    github.company.get({
+    linkedin.company.get({
       'company-id': 1337,
       'url-field-selector': ':(id,name)'
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.company.companyOneAndFields';
+      result['_NAME'] = 'linkedin.company.companyOneAndFields';
       callback(null, result);
     });
   };
 
   var companyOne = function(callback) {
-    github.company.get({"company-id": 162479}, function(err, result) {
+    linkedin.company.get({"company-id": 162479}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.company.one';
+      result['_NAME'] = 'linkedin.company.one';
       callback(null, result);
     });
   };
 
   var companyUniversalName = function(callback) {
-    github.company.getByUniversalName({"universal-name": 'linkedin'}, function(err, result) {
+    linkedin.company.getByUniversalName({"universal-name": 'linkedin'}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.company.oneByUniversalName';
+      result['_NAME'] = 'linkedin.company.oneByUniversalName';
       callback(null, result);
     });
   };
 
   var companyEmailDomain = function(callback) {
-    github.company.getByEmailDomain({"email-domain": 'linkedin.com'}, function(err, result) {
+    linkedin.company.getByEmailDomain({"email-domain": 'linkedin.com'}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.company.companyEmailDomain';
+      result['_NAME'] = 'linkedin.company.companyEmailDomain';
       callback(null, result);
     });
   };
 
   var companyCurrentIsAdmin = function(callback) {
-    github.company.all({'is-company-admin': true}, function(err, result) {
+    linkedin.company.all({'is-company-admin': true}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.company.all';
+      result['_NAME'] = 'linkedin.company.all';
       callback(null, result);
     });
   };
 
   var companyMixed = function(callback) {
-    github.company.all({'url-field-selector': '::(162479,universal-name=linkedin)'}, function(err, result) {
+    linkedin.company.all({'url-field-selector': '::(162479,universal-name=linkedin)'}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.company.all';
+      result['_NAME'] = 'linkedin.company.all';
       callback(null, result);
     });
   };
 
   var companyOneUpdate = function(callback) {
-    github.company.getUpdate({"company-id": 162479}, function(err, result) {
+    linkedin.company.getUpdate({"company-id": 162479}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.company.oneUpdate';
+      result['_NAME'] = 'linkedin.company.oneUpdate';
       callback(null, result);
     });
   };
 
   var companyOneUpdatePagination = function(callback) {
-    github.company.getUpdate({"company-id": 162479, "start":0, "count":5}, function(err, result) {
+    linkedin.company.getUpdate({"company-id": 162479, "start":0, "count":5}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.company.companyOneUpdatePagination';
+      result['_NAME'] = 'linkedin.company.companyOneUpdatePagination';
       callback(null, result);
     });
   };
 
   var companyOneUpdateEventType = function(callback) {
-    github.company.getUpdate({"company-id": 162479, 'event-type': 'status-update'}, function(err, result) {
+    linkedin.company.getUpdate({"company-id": 162479, 'event-type': 'status-update'}, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.company.oneUpdateEventType';
+      result['_NAME'] = 'linkedin.company.oneUpdateEventType';
       callback(null, result);
     });
   };
 
   var companyOneUpdateComments = function(callback) {
-    github.company.getUpdateComments({"company-id": 162479, 
+    linkedin.company.getUpdateComments({"company-id": 162479, 
       'company-update-key': 'UPDATE-c162479-5953413562058702849',
       'event-type': 'CMPY'
     }, function(err, result) {
       if (err)
         result = {"error" : err};
-      result['_NAME'] = 'github.company.companyOneUpdateComments';
+      result['_NAME'] = 'linkedin.company.companyOneUpdateComments';
       callback(null, result);
     });
   };
   
-  // use github API
+  // use linkedin API
   q.defer(ignoreError, companyCurrent);
   q.defer(ignoreError, companyOne);
   q.defer(ignoreError, companyOneAndFields);
@@ -468,7 +468,7 @@ app.get('/company', function (req, res) {
   q.defer(ignoreError, companyMixed);
 
   
-  // q.defer(github.groups.getMemberships, {});  
+  // q.defer(linkedin.groups.getMemberships, {});  
   q.awaitAll(function(error, results) {     
     if (error)
       res.json(error);

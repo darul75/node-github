@@ -20,7 +20,7 @@ describe("[communications]", function() {
 it("should successfully execute POST /people/~/mailbox (sendInvitation)",  function(next) {
     client.communications.sendInvitation(
         {
-                data: "Json"
+                "data": "Json"
             },
         function(err, res) {
             Assert.equal(err, null);

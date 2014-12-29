@@ -42,7 +42,7 @@ var main = module.exports = function(versions, tests, restore) {
     var params = Object.keys(paramsStruct);
     var comment = [
     "/** section: linked",
-    " *  " + section + "#" + funcName + "(msg, callback) -> null",
+    " *  " + section + "#" + funcName + "(msg, callback)",
     " *      - msg (Object): Object that contains the parameters and their values to be sent to the server.",
     " *      - callback (Function): function to call when the request is finished " +
     "with an error as first argument and result data as second argument.",
@@ -105,7 +105,7 @@ var main = module.exports = function(versions, tests, restore) {
       else
         def = paramsStruct[paramName];
 
-      values.push(indent + "    " + paramName + ": \"" + def.type + "\"");
+      values.push(indent + "    \"" + paramName + "\": \"" + def.type + "\"");
     }
     return "{\n" + values.join(",\n") + "\n" + indent + "}";
   }
@@ -142,10 +142,9 @@ var main = module.exports = function(versions, tests, restore) {
 
         // URL and Doc
         apidocs += "\n * \n *  ##### See Also\n * \n";
-        apidocs += " * - Rest api url `" + block.url + "\n";
+        apidocs += " * - REST ["+block.url+"](" + block.url + ")\n";
         apidocs += " * - Documentation " + "[link](" + block["doc-url"] + ")" + "\n";
         apidocs += " **/\n";
-
 
         console.log(block.url);
 

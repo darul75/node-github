@@ -20,8 +20,8 @@ describe("[jobs]", function() {
 it("should successfully execute GET /jobs/:job-id (get)",  function(next) {
     client.jobs.get(
         {
-                job-id: "String",
-                url-field-selector: "String"
+                "job-id": "String",
+                "url-field-selector": "String"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -34,7 +34,7 @@ it("should successfully execute GET /jobs/:job-id (get)",  function(next) {
 it("should successfully execute GET /people/~/job-bookmarks (getCurrentBookmarks)",  function(next) {
     client.jobs.getCurrentBookmarks(
         {
-                url-field-selector: "String"
+                "url-field-selector": "String"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -47,7 +47,7 @@ it("should successfully execute GET /people/~/job-bookmarks (getCurrentBookmarks
 it("should successfully execute POST /people/~/job-bookmarks (bookmark)",  function(next) {
     client.jobs.bookmark(
         {
-                data: "Json"
+                "data": "Json"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -60,7 +60,7 @@ it("should successfully execute POST /people/~/job-bookmarks (bookmark)",  funct
 it("should successfully execute DELETE /people/~/job-bookmarks/:job-id (removeBookmark)",  function(next) {
     client.jobs.removeBookmark(
         {
-                job-id: "String"
+                "job-id": "String"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -73,7 +73,7 @@ it("should successfully execute DELETE /people/~/job-bookmarks/:job-id (removeBo
 it("should successfully execute GET people/~/suggestions/job-suggestions:(jobs) (getCurrentSuggestions)",  function(next) {
     client.jobs.getCurrentSuggestions(
         {
-                job-id: "String"
+                "job-id": "String"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -86,7 +86,7 @@ it("should successfully execute GET people/~/suggestions/job-suggestions:(jobs) 
 it("should successfully execute POST /jobs (add)",  function(next) {
     client.jobs.add(
         {
-                data: "Json"
+                "data": "Json"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -99,8 +99,8 @@ it("should successfully execute POST /jobs (add)",  function(next) {
 it("should successfully execute PUT /jobs (update)",  function(next) {
     client.jobs.update(
         {
-                partner-job-id: "String",
-                data: "Json"
+                "partner-job-id": "String",
+                "data": "Json"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -113,7 +113,7 @@ it("should successfully execute PUT /jobs (update)",  function(next) {
 it("should successfully execute DELETE /jobs (remove)",  function(next) {
     client.jobs.remove(
         {
-                partner-job-id: "String"
+                "partner-job-id": "String"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -126,18 +126,18 @@ it("should successfully execute DELETE /jobs (remove)",  function(next) {
 it("should successfully execute GET /job-search (search)",  function(next) {
     client.jobs.search(
         {
-                keywords: "String",
-                company-name: "String",
-                job-title: "String",
-                country-code: "String",
-                postal-code: "String",
-                distance: "String",
-                facet: "String",
-                facets: "String",
-                start: "Number",
-                count: "Number",
-                sort: "String",
-                url-field-selector: "String"
+                "keywords": "String",
+                "company-name": "String",
+                "job-title": "String",
+                "country-code": "String",
+                "postal-code": "String",
+                "distance": "String",
+                "facet": "String",
+                "facets": "String",
+                "start": "Number",
+                "count": "Number",
+                "sort": "String",
+                "url-field-selector": "String"
             },
         function(err, res) {
             Assert.equal(err, null);

@@ -20,7 +20,7 @@ describe("[share]", function() {
 it("should successfully execute POST /people/~/shares (add)",  function(next) {
     client.share.add(
         {
-                data: "Json"
+                "data": "Json"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -33,14 +33,14 @@ it("should successfully execute POST /people/~/shares (add)",  function(next) {
 it("should successfully execute GET /people/~/network/updates (getNetworksUpdates)",  function(next) {
     client.share.getNetworksUpdates(
         {
-                scope: "String",
-                type: "String",
-                start: "Number",
-                count: "Number",
-                after: "String",
-                before: "String",
-                show-hidden-members: "String",
-                url-field-selector: "String"
+                "scope": "String",
+                "type": "String",
+                "start": "Number",
+                "count": "Number",
+                "after": "Number",
+                "before": "Number",
+                "show-hidden-members": "String",
+                "url-field-selector": "String"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -64,7 +64,7 @@ it("should successfully execute GET /people/~/network/network-stats (getNetworks
 it("should successfully execute GET /people/~/network/updates/key=:update-key/update-comments (getNetworksUpdatesComments)",  function(next) {
     client.share.getNetworksUpdatesComments(
         {
-                update-key: "String"
+                "update-key": "String"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -77,7 +77,7 @@ it("should successfully execute GET /people/~/network/updates/key=:update-key/up
 it("should successfully execute GET /people/~/network/updates/key=:update-key/likes (getNetworksUpdatesLike)",  function(next) {
     client.share.getNetworksUpdatesLike(
         {
-                update-key: "String"
+                "update-key": "String"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -90,8 +90,8 @@ it("should successfully execute GET /people/~/network/updates/key=:update-key/li
 it("should successfully execute POST /people/~/network/updates/key=:update-key/update-comments (addShareComment)",  function(next) {
     client.share.addShareComment(
         {
-                update-key: "String",
-                data: "Json"
+                "update-key": "String",
+                "data": "Json"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -104,8 +104,8 @@ it("should successfully execute POST /people/~/network/updates/key=:update-key/u
 it("should successfully execute PUT /people/~/network/updates/key=:update-key/is-liked (likeShareComment)",  function(next) {
     client.share.likeShareComment(
         {
-                update-key: "String",
-                data: "Json"
+                "update-key": "String",
+                "data": "Json"
             },
         function(err, res) {
             Assert.equal(err, null);
@@ -118,7 +118,7 @@ it("should successfully execute PUT /people/~/network/updates/key=:update-key/is
 it("should successfully execute PUT /people/~/person-activities (postNetworkUpdate)",  function(next) {
     client.share.postNetworkUpdate(
         {
-                data: "Json"
+                "data": "Json"
             },
         function(err, res) {
             Assert.equal(err, null);
