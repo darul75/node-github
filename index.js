@@ -156,7 +156,7 @@ function Client(config) {
   var pathPrefix = "";
   
   // Check if a prefix is passed in the config and strip any leading or trailing slashes from it.
-  if (typeof config.pathPrefix == "string") {
+  if (typeof config.pathPrefix == "string" && config.pathPrefix.length > 0) {
     pathPrefix = "/" + config.pathPrefix.replace(/(^[\/]+|[\/]+$)/g, "");
     this.config.pathPrefix = pathPrefix;
   }
